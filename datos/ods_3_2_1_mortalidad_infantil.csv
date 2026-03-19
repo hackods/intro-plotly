@@ -1,0 +1,85 @@
+pais,iso_alpha,año,mortalidad_menores_5,region
+Argentina,ARG,1990,28.7,América del Sur
+Argentina,ARG,1995,23.5,América del Sur
+Argentina,ARG,2000,20.2,América del Sur
+Argentina,ARG,2005,16.7,América del Sur
+Argentina,ARG,2010,14.1,América del Sur
+Argentina,ARG,2015,11.1,América del Sur
+Argentina,ARG,2020,8.7,América del Sur
+Bolivia,BOL,1990,122.5,América del Sur
+Bolivia,BOL,1995,99.8,América del Sur
+Bolivia,BOL,2000,80.4,América del Sur
+Bolivia,BOL,2005,59.5,América del Sur
+Bolivia,BOL,2010,42.9,América del Sur
+Bolivia,BOL,2015,33.5,América del Sur
+Bolivia,BOL,2020,26.0,América del Sur
+Brazil,BRA,1990,62.5,América del Sur
+Brazil,BRA,1995,45.4,América del Sur
+Brazil,BRA,2000,33.6,América del Sur
+Brazil,BRA,2005,23.0,América del Sur
+Brazil,BRA,2010,17.5,América del Sur
+Brazil,BRA,2015,16.0,América del Sur
+Brazil,BRA,2020,14.0,América del Sur
+Chile,CHL,1990,19.5,América del Sur
+Chile,CHL,1995,13.6,América del Sur
+Chile,CHL,2000,10.9,América del Sur
+Chile,CHL,2005,9.2,América del Sur
+Chile,CHL,2010,8.7,América del Sur
+Chile,CHL,2015,7.9,América del Sur
+Chile,CHL,2020,6.8,América del Sur
+Colombia,COL,1990,35.1,América del Sur
+Colombia,COL,1995,28.8,América del Sur
+Colombia,COL,2000,24.0,América del Sur
+Colombia,COL,2005,21.0,América del Sur
+Colombia,COL,2010,18.5,América del Sur
+Colombia,COL,2015,16.0,América del Sur
+Colombia,COL,2020,13.4,América del Sur
+Ecuador,ECU,1990,56.9,América del Sur
+Ecuador,ECU,1995,42.2,América del Sur
+Ecuador,ECU,2000,32.9,América del Sur
+Ecuador,ECU,2005,26.1,América del Sur
+Ecuador,ECU,2010,21.6,América del Sur
+Ecuador,ECU,2015,16.7,América del Sur
+Ecuador,ECU,2020,13.7,América del Sur
+Mexico,MEX,1990,44.2,América Central
+Mexico,MEX,1995,33.5,América Central
+Mexico,MEX,2000,25.5,América Central
+Mexico,MEX,2005,20.7,América Central
+Mexico,MEX,2010,17.5,América Central
+Mexico,MEX,2015,15.1,América Central
+Mexico,MEX,2020,13.4,América Central
+Peru,PER,1990,78.9,América del Sur
+Peru,PER,1995,58.0,América del Sur
+Peru,PER,2000,39.4,América del Sur
+Peru,PER,2005,27.2,América del Sur
+Peru,PER,2010,19.6,América del Sur
+Peru,PER,2015,16.2,América del Sur
+Peru,PER,2020,12.8,América del Sur
+Uruguay,URY,1990,22.5,América del Sur
+Uruguay,URY,1995,19.9,América del Sur
+Uruguay,URY,2000,16.6,América del Sur
+Uruguay,URY,2005,14.6,América del Sur
+Uruguay,URY,2010,11.1,América del Sur
+Uruguay,URY,2015,9.4,América del Sur
+Uruguay,URY,2020,7.1,América del Sur
+Paraguay,PRY,1990,41.8,América del Sur
+Paraguay,PRY,1995,35.8,América del Sur
+Paraguay,PRY,2000,31.5,América del Sur
+Paraguay,PRY,2005,26.8,América del Sur
+Paraguay,PRY,2010,23.2,América del Sur
+Paraguay,PRY,2015,21.0,América del Sur
+Paraguay,PRY,2020,17.5,América del Sur
+Guatemala,GTM,1990,78.5,América Central
+Guatemala,GTM,1995,60.2,América Central
+Guatemala,GTM,2000,47.4,América Central
+Guatemala,GTM,2005,38.0,América Central
+Guatemala,GTM,2010,32.2,América Central
+Guatemala,GTM,2015,29.0,América Central
+Guatemala,GTM,2020,25.0,América Central
+Honduras,HND,1990,58.0,América Central
+Honduras,HND,1995,46.2,América Central
+Honduras,HND,2000,36.1,América Central
+Honduras,HND,2005,28.8,América Central
+Honduras,HND,2010,23.3,América Central
+Honduras,HND,2015,19.6,América Central
+Honduras,HND,2020,16.2,América Central

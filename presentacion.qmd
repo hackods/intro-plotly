@@ -1,0 +1,622 @@
+---
+title: "Contando historias con datos"
+subtitle: "De matplotlib a Plotly: visualización interactiva"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    code-fold: false
+    code-overflow: wrap
+    smaller: true
+    scrollable: true
+    navigation-mode: linear
+jupyter: python3
+---
+
+## {background-color="#2c3e50"}
+
+:::: {.columns}
+::: {.column width="60%"}
+### Contando historias con datos
+
+De matplotlib a Plotly: visualización interactiva con Python
+
+:::
+::: {.column width="40%"}
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Plotly-logo.png/1200px-Plotly-logo.png){width="300"}
+
+:::
+::::
+
+::: {.notes}
+Bienvenida. En esta sesión vamos a aprender a crear visualizaciones interactivas con Plotly, partiendo desde los fundamentos de matplotlib.
+:::
+
+---
+
+## ¿Por qué visualizar datos?
+
+> "Una imagen vale más que mil filas en una tabla."
+
+- Los humanos procesamos información visual **60,000 veces más rápido** que texto
+- Una buena visualización **revela patrones** ocultos en los datos
+- Las visualizaciones interactivas permiten **explorar** y **contar historias**
+
+---
+
+## {background-color="#2c3e50"}
+
+### Bloque 1: Anatomía de una figura
+
+---
+
+## Anatomía de una figura matplotlib
+
+Cada figura en matplotlib tiene una estructura jerárquica:
+
+```
+Figure (lienzo completo)
+└── Axes (área de graficación)
+    ├── Title (título)
+    ├── XAxis / YAxis (ejes)
+    │   ├── Label (etiqueta del eje)
+    │   ├── Ticks (marcas)
+    │   └── Tick Labels (etiquetas de marcas)
+    ├── Spines (bordes)
+    ├── Legend (leyenda)
+    └── Plot data (líneas, barras, puntos...)
+```
+
+---
+
+## Construyendo una figura pieza por pieza
+
+```{python}
+#| fig-align: center
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Datos
+x = np.linspace(0, 10, 100)
+y1 = np.sin(x)
+y2 = np.cos(x)
+
+# 1. Crear Figure y Axes
+fig, ax = plt.subplots(figsize=(8, 4))
+
+# 2. Graficar datos
+ax.plot(x, y1, label="sin(x)", color="#e74c3c", linewidth=2)
+ax.plot(x, y2, label="cos(x)", color="#3498db", linewidth=2)
+
+# 3. Título y etiquetas de ejes
+ax.set_title("Funciones trigonométricas", fontsize=14, fontweight="bold")
+ax.set_xlabel("x (radianes)")
+ax.set_ylabel("y")
+
+# 4. Leyenda
+ax.legend(loc="upper right")
+
+# 5. Grid y spines
+ax.grid(True, alpha=0.3)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Ejercicio mental: identifica los elementos
+
+```{python}
+#| fig-align: center
+#| code-fold: true
+#| code-summary: "Código de la figura anotada"
+import matplotlib.pyplot as plt
+import numpy as np
+
+fig, ax = plt.subplots(figsize=(8, 5))
+x = np.linspace(0, 2 * np.pi, 50)
+ax.plot(x, np.sin(x), "o-", label="datos", color="#2ecc71")
+
+# Anotaciones de la anatomía
+ax.set_title("← TITLE", fontsize=13, loc="left", color="#e74c3c")
+ax.set_xlabel("← XLABEL", color="#e74c3c")
+ax.set_ylabel("← YLABEL", color="#e74c3c")
+ax.legend(title="← LEGEND", loc="upper right")
+
+ax.annotate("TICK →", xy=(np.pi, 0), fontsize=10, color="#9b59b6",
+            xytext=(np.pi + 0.5, -0.5),
+            arrowprops=dict(arrowstyle="->", color="#9b59b6"))
+
+ax.annotate("SPINE →", xy=(0, -0.8), fontsize=10, color="#e67e22",
+            xytext=(1.5, -0.85),
+            arrowprops=dict(arrowstyle="->", color="#e67e22"))
+
+ax.annotate("DATA POINT →", xy=(x[10], np.sin(x[10])), fontsize=10,
+            color="#3498db", xytext=(x[10] + 1, np.sin(x[10]) + 0.3),
+            arrowprops=dict(arrowstyle="->", color="#3498db"))
+
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## {background-color="#2c3e50"}
+
+### Bloque 2: De matplotlib a Plotly
+
+---
+
+## ¿Por qué Plotly?
+
+| Característica | matplotlib | Plotly |
+|---|---|---|
+| Interactividad | Estático (imagen) | Nativa (hover, zoom, pan) |
+| Web | Requiere backend | HTML nativo |
+| Hover/tooltips | Manual y limitado | Automático |
+| Exportación | PNG, SVG, PDF | HTML, PNG, SVG, PDF |
+| Curva de aprendizaje | Moderada | Baja con `plotly.express` |
+| Integración Quarto | Como imagen | Como widget interactivo |
+
+---
+
+## La misma figura: matplotlib vs Plotly
+
+:::: {.columns}
+::: {.column width="50%"}
+### matplotlib (estático)
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+fig, ax = plt.subplots(figsize=(4, 3))
+ax.plot(x, np.sin(x), label="sin(x)")
+ax.plot(x, np.cos(x), label="cos(x)")
+ax.set_title("Trigonométricas")
+ax.legend()
+plt.tight_layout()
+plt.show()
+```
+:::
+::: {.column width="50%"}
+### Plotly (interactivo)
+```{python}
+import plotly.express as px
+import pandas as pd
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+df = pd.DataFrame({
+    "x": np.tile(x, 2),
+    "y": np.concatenate([np.sin(x), np.cos(x)]),
+    "función": ["sin(x)"] * 100 + ["cos(x)"] * 100
+})
+fig = px.line(df, x="x", y="y", color="función",
+              title="Trigonométricas")
+fig.show()
+```
+:::
+::::
+
+---
+
+## Plotly Express: la interfaz rápida
+
+```{python}
+import plotly.express as px
+
+# Datos incluidos en plotly
+df = px.data.gapminder()
+df_2007 = df.query("year == 2007")
+
+fig = px.scatter(
+    df_2007,
+    x="gdpPercap",
+    y="lifeExp",
+    size="pop",
+    color="continent",
+    hover_name="country",
+    log_x=True,
+    title="Esperanza de vida vs PIB per cápita (2007)",
+    labels={"gdpPercap": "PIB per cápita (USD)",
+            "lifeExp": "Esperanza de vida (años)",
+            "pop": "Población"}
+)
+fig.show()
+```
+
+::: {.callout-tip}
+Pasa el cursor sobre los puntos. Haz zoom con scroll. Doble clic para resetear.
+:::
+
+---
+
+## Integración con Quarto
+
+**Esta presentación es la prueba:**
+
+- Cada celda de código Python se ejecuta al renderizar
+- Las figuras Plotly se insertan como widgets interactivos
+- Se puede exportar a HTML, PDF, o presentar en vivo
+
+```bash
+# Renderizar la presentación
+quarto preview presentacion.qmd
+
+# Exportar a HTML
+quarto render presentacion.qmd
+```
+
+---
+
+## {background-color="#2c3e50"}
+
+### Bloque 3: La galería como herramienta
+
+---
+
+## La galería de Plotly
+
+La mejor forma de aprender Plotly es **copiar y adaptar** desde la galería oficial:
+
+**[plotly.com/python/](https://plotly.com/python/)**
+
+### Patrón de trabajo:
+
+1. **Buscar** el tipo de gráfico que necesitas
+2. **Copiar** el código de ejemplo
+3. **Entender** la estructura de datos que requiere
+4. **Adaptar** con tus propios datos
+
+::: {.callout-important}
+Lo más importante no es memorizar la API, sino **entender qué estructura de datos necesita cada gráfico**.
+:::
+
+---
+
+## Concepto clave: datos en formato *long*
+
+La mayoría de gráficos en `plotly.express` esperan datos en formato **long** (tidy):
+
+:::: {.columns}
+::: {.column width="45%"}
+### Wide (ancho)
+| país | 2020 | 2021 | 2022 |
+|------|------|------|------|
+| MX   | 10   | 12   | 15   |
+| CO   | 8    | 9    | 11   |
+:::
+::: {.column width="10%"}
+→
+:::
+::: {.column width="45%"}
+### Long (largo)
+| país | año  | valor |
+|------|------|-------|
+| MX   | 2020 | 10    |
+| MX   | 2021 | 12    |
+| MX   | 2022 | 15    |
+| CO   | 2020 | 8     |
+| CO   | 2021 | 9     |
+| CO   | 2022 | 11    |
+:::
+::::
+
+```python
+# Convertir de wide a long
+df_long = df_wide.melt(id_vars=["país"], var_name="año", value_name="valor")
+```
+
+---
+
+## Ejemplo 1: Barras agrupadas
+
+```{python}
+import plotly.express as px
+
+# Datos de gapminder para países de América
+df = px.data.gapminder()
+paises = ["Mexico", "Colombia", "Argentina", "Chile", "Brazil"]
+df_latam = df[(df["country"].isin(paises)) & (df["year"] >= 1990)]
+
+fig = px.bar(
+    df_latam,
+    x="year",
+    y="gdpPercap",
+    color="country",
+    barmode="group",
+    title="PIB per cápita en Latinoamérica (1990-2007)",
+    labels={"gdpPercap": "PIB per cápita (USD)",
+            "year": "Año",
+            "country": "País"}
+)
+fig.update_layout(xaxis_type="category")
+fig.show()
+```
+
+---
+
+## Ejemplo 2: Series temporales con hover
+
+```{python}
+import plotly.express as px
+
+df = px.data.gapminder()
+paises = ["Mexico", "Colombia", "Argentina", "Chile", "Brazil"]
+df_latam = df[df["country"].isin(paises)]
+
+fig = px.line(
+    df_latam,
+    x="year",
+    y="lifeExp",
+    color="country",
+    markers=True,
+    title="Evolución de la esperanza de vida en Latinoamérica",
+    labels={"lifeExp": "Esperanza de vida (años)",
+            "year": "Año",
+            "country": "País"},
+    hover_data=["pop", "gdpPercap"]
+)
+fig.update_traces(hovertemplate=(
+    "<b>%{customdata[0]:,.0f}</b> habitantes<br>"
+    "PIB: $%{customdata[1]:,.0f}<br>"
+    "Esperanza: %{y:.1f} años"
+))
+fig.show()
+```
+
+---
+
+## Ejemplo 3: Mapa coroplético
+
+```{python}
+import plotly.express as px
+
+df = px.data.gapminder().query("year == 2007")
+
+fig = px.choropleth(
+    df,
+    locations="iso_alpha",
+    color="lifeExp",
+    hover_name="country",
+    color_continuous_scale="Viridis",
+    title="Esperanza de vida por país (2007)",
+    labels={"lifeExp": "Esperanza de vida"}
+)
+fig.update_layout(
+    geo=dict(showframe=False, showcoastlines=True),
+    margin=dict(l=0, r=0, t=40, b=0)
+)
+fig.show()
+```
+
+---
+
+## Ejercicio: reproduce un gráfico de la galería
+
+1. Ve a [plotly.com/python/](https://plotly.com/python/)
+2. Elige un tipo de gráfico que te interese
+3. Copia el ejemplo y ejecútalo
+4. Identifica: ¿qué estructura de datos necesita?
+5. Adapta el ejemplo usando datos de `gapminder`
+
+::: {.callout-tip}
+Tipos recomendados para explorar:
+
+- [Sunburst](https://plotly.com/python/sunburst-charts/)
+- [Treemap](https://plotly.com/python/treemaps/)
+- [Animated scatter](https://plotly.com/python/animations/)
+- [Box plot](https://plotly.com/python/box-plots/)
+:::
+
+---
+
+## {background-color="#2c3e50"}
+
+### Bloque 4: Datos de la Agenda 2030
+
+---
+
+## Objetivos de Desarrollo Sostenible (ODS)
+
+La **Agenda 2030** de Naciones Unidas define 17 Objetivos de Desarrollo Sostenible.
+
+Vamos a trabajar con el **indicador ODS 3.2.1**:
+
+> *Tasa de mortalidad de menores de 5 años (por cada 1,000 nacidos vivos)*
+
+Fuentes de datos abiertos:
+
+- API de la ONU: [unstats.un.org/sdgapi/](https://unstats.un.org/sdgapi/)
+- Banco Mundial: [data.worldbank.org](https://data.worldbank.org/)
+- datos.gob.es (España): [datos.gob.es](https://datos.gob.es/)
+
+---
+
+## Paso 1: Cargar y explorar los datos
+
+```{python}
+import pandas as pd
+
+# Datos ODS 3.2.1 - Mortalidad infantil en Latinoamérica
+# Fuente: Banco Mundial (indicador SH.DYN.MORT)
+df = pd.read_csv("datos/ods_3_2_1_mortalidad_infantil.csv")
+
+print(f"Dimensiones: {df.shape}")
+print(f"Países: {df['pais'].nunique()}")
+print(f"Período: {df['año'].min()} - {df['año'].max()}")
+print(f"\nColumnas: {list(df.columns)}")
+df.head(10)
+```
+
+::: {.callout-note}
+Los datos ya están en formato **long** — exactamente lo que Plotly Express necesita.
+:::
+
+---
+
+## Paso 2: Líneas de tiempo por país
+
+```{python}
+import plotly.express as px
+import pandas as pd
+
+df = pd.read_csv("datos/ods_3_2_1_mortalidad_infantil.csv")
+
+fig = px.line(
+    df,
+    x="año",
+    y="mortalidad_menores_5",
+    color="pais",
+    markers=True,
+    title="ODS 3.2.1: Mortalidad de menores de 5 años en Latinoamérica",
+    labels={
+        "mortalidad_menores_5": "Muertes por cada 1,000 nacidos vivos",
+        "año": "Año",
+        "pais": "País"
+    }
+)
+
+fig.add_hline(y=25, line_dash="dash", line_color="red",
+              annotation_text="Meta ODS 2030: 25 por 1,000")
+
+fig.update_layout(
+    legend=dict(font=dict(size=9)),
+    hovermode="x unified"
+)
+fig.show()
+```
+
+---
+
+## Paso 3: Dumbbell chart — progreso 1990 vs 2020
+
+```{python}
+import plotly.graph_objects as go
+import pandas as pd
+
+df = pd.read_csv("datos/ods_3_2_1_mortalidad_infantil.csv")
+
+df_1990 = df[df["año"] == 1990][["pais", "mortalidad_menores_5"]].rename(
+    columns={"mortalidad_menores_5": "m_1990"})
+df_2020 = df[df["año"] == 2020][["pais", "mortalidad_menores_5"]].rename(
+    columns={"mortalidad_menores_5": "m_2020"})
+
+df_comp = df_1990.merge(df_2020, on="pais")
+df_comp["reduccion"] = df_comp["m_1990"] - df_comp["m_2020"]
+df_comp["pct_reduccion"] = (df_comp["reduccion"] / df_comp["m_1990"] * 100).round(1)
+df_comp = df_comp.sort_values("reduccion", ascending=True)
+
+fig = go.Figure()
+
+# Líneas conectoras
+for _, row in df_comp.iterrows():
+    fig.add_shape(
+        type="line",
+        x0=row["m_1990"], x1=row["m_2020"],
+        y0=row["pais"], y1=row["pais"],
+        line=dict(color="lightgray", width=2)
+    )
+
+fig.add_trace(go.Scatter(
+    x=df_comp["m_1990"], y=df_comp["pais"],
+    mode="markers", name="1990",
+    marker=dict(size=14, color="#e74c3c"),
+    hovertemplate="%{y}: %{x:.1f} por 1,000<extra>1990</extra>"
+))
+
+fig.add_trace(go.Scatter(
+    x=df_comp["m_2020"], y=df_comp["pais"],
+    mode="markers", name="2020",
+    marker=dict(size=14, color="#2ecc71"),
+    hovertemplate="%{y}: %{x:.1f} por 1,000<extra>2020</extra>"
+))
+
+fig.add_vline(x=25, line_dash="dash", line_color="red",
+              annotation_text="Meta ODS")
+
+fig.update_layout(
+    title="ODS 3.2.1: Reducción de mortalidad infantil (1990 → 2020)",
+    xaxis_title="Muertes por cada 1,000 nacidos vivos",
+    height=500,
+    margin=dict(l=120)
+)
+fig.show()
+```
+
+---
+
+## Paso 4: Mapa coroplético de la región
+
+```{python}
+import plotly.express as px
+import pandas as pd
+
+df = pd.read_csv("datos/ods_3_2_1_mortalidad_infantil.csv")
+df_2020 = df[df["año"] == 2020]
+
+fig = px.choropleth(
+    df_2020,
+    locations="iso_alpha",
+    color="mortalidad_menores_5",
+    hover_name="pais",
+    color_continuous_scale="RdYlGn_r",
+    range_color=[5, 30],
+    title="ODS 3.2.1: Mortalidad infantil en Latinoamérica (2020)",
+    labels={"mortalidad_menores_5": "Muertes / 1,000"}
+)
+
+fig.update_layout(
+    geo=dict(
+        showframe=False,
+        scope="south america",
+        showcoastlines=True
+    ),
+    margin=dict(l=0, r=0, t=40, b=0)
+)
+fig.show()
+```
+
+---
+
+## {background-color="#2c3e50"}
+
+### Cierre
+
+---
+
+## Recursos
+
+| Recurso | URL |
+|---|---|
+| Galería Plotly | [plotly.com/python/](https://plotly.com/python/) |
+| Plotly Express API | [plotly.com/python-api-reference/](https://plotly.com/python-api-reference/) |
+| Quarto + Plotly | [quarto.org/docs/interactive/](https://quarto.org/docs/interactive/) |
+| API ODS (ONU) | [unstats.un.org/sdgapi/](https://unstats.un.org/sdgapi/) |
+| Banco Mundial | [data.worldbank.org](https://data.worldbank.org/) |
+| Datos abiertos ODS (ES) | [datos.gob.es](https://datos.gob.es/) |
+| Código de esta sesión | Este repositorio |
+
+---
+
+## Recapitulación
+
+1. **matplotlib** → entender la anatomía de una figura
+2. **Plotly Express** → crear figuras interactivas con una línea
+3. **La galería** → copiar, entender la estructura de datos, adaptar
+4. **Datos reales** → aplicar todo con indicadores ODS de la Agenda 2030
+
+::: {.callout-note}
+La clave no es memorizar funciones, sino **entender qué estructura de datos necesita cada gráfico** y saber buscar en la galería.
+:::
+
+---
+
+## ¡Gracias!
+
+Explora, copia, adapta, y cuenta tu historia con datos.
