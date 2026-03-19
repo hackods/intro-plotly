@@ -1,9 +1,10 @@
 ---
-title: "Contando historias con datos"
+title: "Intro a Plotly"
 subtitle: "De matplotlib a Plotly: visualización interactiva"
 format:
   revealjs:
     theme: simple
+    css: custom.css
     slide-number: true
     code-fold: false
     code-overflow: wrap
@@ -13,132 +14,278 @@ format:
 jupyter: python3
 ---
 
+
+
 ## {background-color="#2c3e50"}
 
-:::: {.columns}
-::: {.column width="60%"}
-### Contando historias con datos
-
-De matplotlib a Plotly: visualización interactiva con Python
-
-:::
-::: {.column width="40%"}
-
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Plotly-logo.png/1200px-Plotly-logo.png){width="300"}
-
-:::
-::::
-
-::: {.notes}
-Bienvenida. En esta sesión vamos a aprender a crear visualizaciones interactivas con Plotly, partiendo desde los fundamentos de matplotlib.
-:::
-
----
+### Bloque 1: Introducción
 
 ## ¿Por qué visualizar datos?
 
+<br>
+<br>
+<br>
+<br>
+<br>
+
 > "Una imagen vale más que mil filas en una tabla."
 
-- Los humanos procesamos información visual **60,000 veces más rápido** que texto
-- Una buena visualización **revela patrones** ocultos en los datos
-- Las visualizaciones interactivas permiten **explorar** y **contar historias**
+## ¿Por qué visualizar datos?
+
+<br>
+<br>
+<br>
+<br>
+
+> La *Dual Coding Theory* (Paivio, 1971) propone que combinar
+representaciones verbal y visual activa canales cognitivos
+independientes, potenciando la retención. Estudios posteriores
+cuantifican este efecto: la retención a 72h sube de ~10% (solo
+audio) a ~65% cuando se añade imagen (Medina, 2008).
+
+## ¿Por qué visualizar datos?
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+> Una buena visualización **revela patrones** ocultos en los datos
+
+## ¿Por qué visualizar datos?
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+> Las visualizaciones interactivas permiten **explorar** y **contar historias**
 
 ---
 
 ## {background-color="#2c3e50"}
 
-### Bloque 1: Anatomía de una figura
+### Bloque 2: Anatomía de una figura
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+> Para hacer una figura, necesitamos conocer una figura.
 
 ---
+
+
 
 ## Anatomía de una figura matplotlib
 
 Cada figura en matplotlib tiene una estructura jerárquica:
 
+<br>
+<br>
+
 ```
-Figure (lienzo completo)
-└── Axes (área de graficación)
-    ├── Title (título)
-    ├── XAxis / YAxis (ejes)
-    │   ├── Label (etiqueta del eje)
-    │   ├── Ticks (marcas)
-    │   └── Tick Labels (etiquetas de marcas)
-    ├── Spines (bordes)
-    ├── Legend (leyenda)
-    └── Plot data (líneas, barras, puntos...)
+fig, ax = plt.subplots()
+
+fig  → Figure (lienzo completo)
+ax   → Axes (área de graficación)
+       ├── ax.set_title()           → Title
+       ├── ax.xaxis / ax.yaxis      → Ejes
+       │   ├── ax.set_xlabel()      → Label
+       │   ├── ax.set_xticks()      → Ticks
+       │   └── ax.set_xticklabels() → Tick Labels
+       ├── ax.spines                → Spines (bordes)
+       ├── ax.legend()              → Legend
+       └── ax.plot() / ax.bar()     → Plot data
 ```
+
+
+## Anatomía de una figura matplotlib
+
+![](imgs/anatomy_figure.png){fig-align="center" width="55%"}
 
 ---
 
-## Construyendo una figura pieza por pieza
+## Ejercicio mental: ¿dónde está el **Title**?
 
 ```{python}
 #| fig-align: center
+#| echo: false
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Datos
-x = np.linspace(0, 10, 100)
-y1 = np.sin(x)
-y2 = np.cos(x)
+def base_plot():
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    x = np.linspace(0, 2 * np.pi, 50)
+    ax.plot(x, np.sin(x), "o-", label="sin(x)", color="#2ecc71")
+    ax.set_title("Mi gráfica", fontsize=14)
+    ax.set_xlabel("Eje X")
+    ax.set_ylabel("Eje Y")
+    ax.legend(loc="upper right")
+    return fig, ax, x
 
-# 1. Crear Figure y Axes
-fig, ax = plt.subplots(figsize=(8, 4))
-
-# 2. Graficar datos
-ax.plot(x, y1, label="sin(x)", color="#e74c3c", linewidth=2)
-ax.plot(x, y2, label="cos(x)", color="#3498db", linewidth=2)
-
-# 3. Título y etiquetas de ejes
-ax.set_title("Funciones trigonométricas", fontsize=14, fontweight="bold")
-ax.set_xlabel("x (radianes)")
-ax.set_ylabel("y")
-
-# 4. Leyenda
-ax.legend(loc="upper right")
-
-# 5. Grid y spines
-ax.grid(True, alpha=0.3)
-ax.spines["top"].set_visible(False)
-ax.spines["right"].set_visible(False)
-
+fig, ax, x = base_plot()
 plt.tight_layout()
 plt.show()
 ```
 
 ---
 
-## Ejercicio mental: identifica los elementos
+## Respuesta: **Title**
 
 ```{python}
 #| fig-align: center
-#| code-fold: true
-#| code-summary: "Código de la figura anotada"
-import matplotlib.pyplot as plt
-import numpy as np
+#| echo: false
+fig, ax, x = base_plot()
+ax.set_title("Mi gráfica ← TITLE", fontsize=14, color="#e74c3c")
+plt.tight_layout()
+plt.show()
+```
 
-fig, ax = plt.subplots(figsize=(8, 5))
-x = np.linspace(0, 2 * np.pi, 50)
-ax.plot(x, np.sin(x), "o-", label="datos", color="#2ecc71")
+---
 
-# Anotaciones de la anatomía
-ax.set_title("← TITLE", fontsize=13, loc="left", color="#e74c3c")
-ax.set_xlabel("← XLABEL", color="#e74c3c")
-ax.set_ylabel("← YLABEL", color="#e74c3c")
-ax.legend(title="← LEGEND", loc="upper right")
+## ¿Dónde está el **xlabel**?
 
-ax.annotate("TICK →", xy=(np.pi, 0), fontsize=10, color="#9b59b6",
-            xytext=(np.pi + 0.5, -0.5),
-            arrowprops=dict(arrowstyle="->", color="#9b59b6"))
+```{python}
+#| fig-align: center
+#| echo: false
+fig, ax, x = base_plot()
+plt.tight_layout()
+plt.show()
+```
 
-ax.annotate("SPINE →", xy=(0, -0.8), fontsize=10, color="#e67e22",
-            xytext=(1.5, -0.85),
-            arrowprops=dict(arrowstyle="->", color="#e67e22"))
+---
 
-ax.annotate("DATA POINT →", xy=(x[10], np.sin(x[10])), fontsize=10,
-            color="#3498db", xytext=(x[10] + 1, np.sin(x[10]) + 0.3),
-            arrowprops=dict(arrowstyle="->", color="#3498db"))
+## Respuesta: **xlabel**
 
+```{python}
+#| fig-align: center
+#| echo: false
+fig, ax, x = base_plot()
+ax.set_xlabel("Eje X ← XLABEL", color="#e74c3c", fontsize=13)
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## ¿Dónde está la **Legend**?
+
+```{python}
+#| fig-align: center
+#| echo: false
+fig, ax, x = base_plot()
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Respuesta: **Legend**
+
+```{python}
+#| fig-align: center
+#| echo: false
+fig, ax, x = base_plot()
+legend = ax.legend(loc="upper right")
+legend.get_frame().set_edgecolor("#e74c3c")
+legend.get_frame().set_linewidth(3)
+ax.annotate("← LEGEND", xy=(0.98, 0.95), xycoords="axes fraction",
+            fontsize=12, color="#e74c3c", ha="right",
+            xytext=(0.75, 0.80),
+            arrowprops=dict(arrowstyle="->", color="#e74c3c"))
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## ¿Dónde está un **Tick**?
+
+```{python}
+#| fig-align: center
+#| echo: false
+fig, ax, x = base_plot()
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Respuesta: **Tick**
+
+```{python}
+#| fig-align: center
+#| echo: false
+fig, ax, x = base_plot()
+ax.annotate("← TICK", xy=(4, 0), xycoords=("data", "axes fraction"),
+            fontsize=12, color="#9b59b6",
+            xytext=(4.3, 0.08),
+            arrowprops=dict(arrowstyle="->", color="#9b59b6", lw=2))
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## ¿Dónde está un **Spine**?
+
+```{python}
+#| fig-align: center
+#| echo: false
+fig, ax, x = base_plot()
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Respuesta: **Spine**
+
+```{python}
+#| fig-align: center
+#| echo: false
+fig, ax, x = base_plot()
+ax.spines["left"].set_color("#e67e22")
+ax.spines["left"].set_linewidth(4)
+ax.annotate("← SPINE", xy=(0, 0.5), xycoords=("axes fraction", "axes fraction"),
+            fontsize=12, color="#e67e22",
+            xytext=(0.08, 0.5),
+            arrowprops=dict(arrowstyle="->", color="#e67e22", lw=2))
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## ¿Dónde está un **Data Point**?
+
+```{python}
+#| fig-align: center
+#| echo: false
+fig, ax, x = base_plot()
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Respuesta: **Data Point**
+
+```{python}
+#| fig-align: center
+#| echo: false
+fig, ax, x = base_plot()
+ax.plot(x[10], np.sin(x[10]), "o", markersize=18, markerfacecolor="none",
+        markeredgecolor="#3498db", markeredgewidth=3)
+ax.annotate("← DATA POINT", xy=(x[10], np.sin(x[10])), fontsize=12,
+            color="#3498db", xytext=(x[10] + 1.2, np.sin(x[10]) + 0.25),
+            arrowprops=dict(arrowstyle="->", color="#3498db", lw=2))
 plt.tight_layout()
 plt.show()
 ```
@@ -147,11 +294,15 @@ plt.show()
 
 ## {background-color="#2c3e50"}
 
-### Bloque 2: De matplotlib a Plotly
+### Bloque 3: De matplotlib a Plotly
 
 ---
 
 ## ¿Por qué Plotly?
+
+<br>
+<br>
+<br>
 
 | Característica | matplotlib | Plotly |
 |---|---|---|
@@ -164,17 +315,20 @@ plt.show()
 
 ---
 
-## La misma figura: matplotlib vs Plotly
+## La misma figura: matplotlib (estático)
 
-:::: {.columns}
-::: {.column width="50%"}
-### matplotlib (estático)
+
+<br>
+<br>
+<br>
+
 ```{python}
+#| fig-align: center
 import matplotlib.pyplot as plt
 import numpy as np
 
 x = np.linspace(0, 10, 100)
-fig, ax = plt.subplots(figsize=(4, 3))
+fig, ax = plt.subplots(figsize=(8, 4))
 ax.plot(x, np.sin(x), label="sin(x)")
 ax.plot(x, np.cos(x), label="cos(x)")
 ax.set_title("Trigonométricas")
@@ -182,9 +336,11 @@ ax.legend()
 plt.tight_layout()
 plt.show()
 ```
-:::
-::: {.column width="50%"}
-### Plotly (interactivo)
+
+---
+
+## La misma figura: Plotly (interactivo)
+
 ```{python}
 import plotly.express as px
 import pandas as pd
@@ -200,8 +356,6 @@ fig = px.line(df, x="x", y="y", color="función",
               title="Trigonométricas")
 fig.show()
 ```
-:::
-::::
 
 ---
 
@@ -222,6 +376,7 @@ fig = px.scatter(
     color="continent",
     hover_name="country",
     log_x=True,
+    size_max=60,
     title="Esperanza de vida vs PIB per cápita (2007)",
     labels={"gdpPercap": "PIB per cápita (USD)",
             "lifeExp": "Esperanza de vida (años)",
@@ -230,9 +385,53 @@ fig = px.scatter(
 fig.show()
 ```
 
-::: {.callout-tip}
-Pasa el cursor sobre los puntos. Haz zoom con scroll. Doble clic para resetear.
-:::
+---
+
+## Plotly Express: la interfaz rápida (código)
+
+```python
+import plotly.express as px
+
+gapminder = px.data.gapminder()
+gapminder_2007 = df.query("year == 2007")
+
+fig = px.scatter(
+    gapminder_2007,
+    x="gdpPercap",
+    y="lifeExp",
+    size="pop",
+    color="continent",
+    hover_name="country",
+    log_x=True,
+    size_max=60,
+    title="Esperanza de vida vs PIB per cápita (2007)",
+    labels={"gdpPercap": "PIB per cápita (USD)",
+            "lifeExp": "Esperanza de vida (años)",
+            "pop": "Población"}
+)
+fig.show()
+```
+
+---
+
+## Los datos: gapminder (todos los años)
+
+```{python}
+#| echo: false
+import plotly.express as px
+gapminder = px.data.gapminder()
+gapminder.head(8)
+```
+
+---
+
+## Los datos: gapminder 2007 (filtrado)
+
+```{python}
+#| echo: false
+gapminder_2007 = gapminder.query("year == 2007")
+gapminder_2007.head(8)
+```
 
 ---
 
@@ -274,7 +473,7 @@ La mejor forma de aprender Plotly es **copiar y adaptar** desde la galería ofic
 4. **Adaptar** con tus propios datos
 
 ::: {.callout-important}
-Lo más importante no es memorizar la API, sino **entender qué estructura de datos necesita cada gráfico**.
+Lo más importante no es memorizar, sino **entender qué estructura de datos necesita cada gráfico**.
 :::
 
 ---
@@ -314,34 +513,8 @@ df_long = df_wide.melt(id_vars=["país"], var_name="año", value_name="valor")
 
 ---
 
-## Ejemplo 1: Barras agrupadas
 
-```{python}
-import plotly.express as px
-
-# Datos de gapminder para países de América
-df = px.data.gapminder()
-paises = ["Mexico", "Colombia", "Argentina", "Chile", "Brazil"]
-df_latam = df[(df["country"].isin(paises)) & (df["year"] >= 1990)]
-
-fig = px.bar(
-    df_latam,
-    x="year",
-    y="gdpPercap",
-    color="country",
-    barmode="group",
-    title="PIB per cápita en Latinoamérica (1990-2007)",
-    labels={"gdpPercap": "PIB per cápita (USD)",
-            "year": "Año",
-            "country": "País"}
-)
-fig.update_layout(xaxis_type="category")
-fig.show()
-```
-
----
-
-## Ejemplo 2: Series temporales con hover
+## Ejemplo 1: Series temporales con hover
 
 ```{python}
 import plotly.express as px
@@ -372,7 +545,7 @@ fig.show()
 
 ---
 
-## Ejemplo 3: Mapa coroplético
+## Ejemplo 2: Mapa coroplético
 
 ```{python}
 import plotly.express as px
@@ -397,16 +570,9 @@ fig.show()
 
 ---
 
-## Ejercicio: reproduce un gráfico de la galería
-
-1. Ve a [plotly.com/python/](https://plotly.com/python/)
-2. Elige un tipo de gráfico que te interese
-3. Copia el ejemplo y ejecútalo
-4. Identifica: ¿qué estructura de datos necesita?
-5. Adapta el ejemplo usando datos de `gapminder`
+## Ejercicio: Explora los siguientes gráficos]
 
 ::: {.callout-tip}
-Tipos recomendados para explorar:
 
 - [Sunburst](https://plotly.com/python/sunburst-charts/)
 - [Treemap](https://plotly.com/python/treemaps/)
@@ -567,7 +733,7 @@ fig = px.choropleth(
     hover_name="pais",
     color_continuous_scale="RdYlGn_r",
     range_color=[5, 30],
-    title="ODS 3.2.1: Mortalidad infantil en Latinoamérica (2020)",
+    title="ODS 3.2.1: Mortalidad infantil en sudamérica (2020)",
     labels={"mortalidad_menores_5": "Muertes / 1,000"}
 )
 
@@ -599,7 +765,6 @@ fig.show()
 | Quarto + Plotly | [quarto.org/docs/interactive/](https://quarto.org/docs/interactive/) |
 | API ODS (ONU) | [unstats.un.org/sdgapi/](https://unstats.un.org/sdgapi/) |
 | Banco Mundial | [data.worldbank.org](https://data.worldbank.org/) |
-| Datos abiertos ODS (ES) | [datos.gob.es](https://datos.gob.es/) |
 | Código de esta sesión | Este repositorio |
 
 ---

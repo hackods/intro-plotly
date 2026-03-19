@@ -1,0 +1,4 @@
+.has-dark-background blockquote,
+.has-dark-background blockquote p {
+  color: white;
+}
