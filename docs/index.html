@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.25">
+
+  <title>Contando historias con datos</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-7262fb28817f0fdf3c802d565bf43787.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+  <script>
+  window.PlotlyConfig = {MathJaxConfig: 'local'};
+  if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+  </script>
+  <script type="module">import "https://cdn.plot.ly/plotly-3.4.0.min"</script>
+
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Contando historias con datos</h1>
+  <p class="subtitle">De matplotlib a Plotly: visualización interactiva</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="section" class="slide level2" data-background-color="#2c3e50">
+<h2></h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<h3 id="contando-historias-con-datos">Contando historias con datos</h3>
+<p>De matplotlib a Plotly: visualización interactiva con Python</p>
+</div><div class="column" style="width:40%;">
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Plotly-logo.png/1200px-Plotly-logo.png" width="300"></p>
+</div></div>
+<aside class="notes">
+<p>Bienvenida. En esta sesión vamos a aprender a crear visualizaciones interactivas con Plotly, partiendo desde los fundamentos de matplotlib.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="por-qué-visualizar-datos" class="slide level2">
+<h2>¿Por qué visualizar datos?</h2>
+<blockquote>
+<p>“Una imagen vale más que mil filas en una tabla.”</p>
+</blockquote>
+<ul>
+<li>Los humanos procesamos información visual <strong>60,000 veces más rápido</strong> que texto</li>
+<li>Una buena visualización <strong>revela patrones</strong> ocultos en los datos</li>
+<li>Las visualizaciones interactivas permiten <strong>explorar</strong> y <strong>contar historias</strong></li>
+</ul>
+</section>
+<section id="section-1" class="slide level2" data-background-color="#2c3e50">
+<h2></h2>
+<h3 id="bloque-1-anatomía-de-una-figura">Bloque 1: Anatomía de una figura</h3>
+</section>
+<section id="anatomía-de-una-figura-matplotlib" class="slide level2">
+<h2>Anatomía de una figura matplotlib</h2>
+<p>Cada figura en matplotlib tiene una estructura jerárquica:</p>
+<pre><code>Figure (lienzo completo)
+└── Axes (área de graficación)
+    ├── Title (título)
+    ├── XAxis / YAxis (ejes)
+    │   ├── Label (etiqueta del eje)
+    │   ├── Ticks (marcas)
+    │   └── Tick Labels (etiquetas de marcas)
+    ├── Spines (bordes)
+    ├── Legend (leyenda)
+    └── Plot data (líneas, barras, puntos...)</code></pre>
+</section>
+<section id="construyendo-una-figura-pieza-por-pieza" class="slide level2">
+<h2>Construyendo una figura pieza por pieza</h2>
+<div id="42d78c07" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="index_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" width="758" height="373"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-mental-identifica-los-elementos" class="slide level2">
+<h2>Ejercicio mental: identifica los elementos</h2>
+<div id="87f41137" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="index_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" width="758" height="471"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section-2" class="slide level2" data-background-color="#2c3e50">
+<h2></h2>
+<h3 id="bloque-2-de-matplotlib-a-plotly">Bloque 2: De matplotlib a Plotly</h3>
+</section>
+<section id="por-qué-plotly" class="slide level2">
+<h2>¿Por qué Plotly?</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Característica</th>
+<th>matplotlib</th>
+<th>Plotly</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Interactividad</td>
+<td>Estático (imagen)</td>
+<td>Nativa (hover, zoom, pan)</td>
+</tr>
+<tr class="even">
+<td>Web</td>
+<td>Requiere backend</td>
+<td>HTML nativo</td>
+</tr>
+<tr class="odd">
+<td>Hover/tooltips</td>
+<td>Manual y limitado</td>
+<td>Automático</td>
+</tr>
+<tr class="even">
+<td>Exportación</td>
+<td>PNG, SVG, PDF</td>
+<td>HTML, PNG, SVG, PDF</td>
+</tr>
+<tr class="odd">
+<td>Curva de aprendizaje</td>
+<td>Moderada</td>
+<td>Baja con <code>plotly.express</code></td>
+</tr>
+<tr class="even">
+<td>Integración Quarto</td>
+<td>Como imagen</td>
+<td>Como widget interactivo</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="la-misma-figura-matplotlib-vs-plotly" class="slide level2">
+<h2>La misma figura: matplotlib vs Plotly</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="matplotlib-estático">matplotlib (estático)</h3>
+<div id="d8ede503" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/cell-4-output-1.png" width="374" height="278"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<h3 id="plotly-interactivo">Plotly (interactivo)</h3>
+<div id="81151bb2" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.4.0.min.js" integrity="sha256-KEmPoupLpFyGMyGAiOsiNDbKDKAvxXAn/W+oQa0ZAfk=" crossorigin="anonymous"></script>                <div id="d91e24b1-037c-4e0b-92f3-4cf33b9d5b65" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("d91e24b1-037c-4e0b-92f3-4cf33b9d5b65")) {                    Plotly.newPlot(                        "d91e24b1-037c-4e0b-92f3-4cf33b9d5b65",                        [{"hovertemplate":"función=sin(x)\u003cbr\u003ex=%{x}\u003cbr\u003ey=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"sin(x)","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"sin(x)","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"AAAAAAAAAAAxb2dIzNu5PzFvZ0jM28k\u002fZZNNNtlk0z8xb2dIzNvZP3+lQK1fKeA\u002fZZNNNtlk4z9LgVq\u002fUqDmPzFvZ0jM2+k\u002fF1100UUX7T9\u002fpUCtXynwP3Icx3Ecx\u002fE\u002fZZNNNtlk8z9YCtT6lQL1P0uBWr9SoPY\u002fPvjggw8++D8xb2dIzNv5PyTm7QyJefs\u002fF1100UUX\u002fT8K1PqVArX+P3+lQK1fKQBA+OCDDz74AEByHMdxHMcBQOtXCtT6lQJAZZNNNtlkA0DezpCYtzMEQFgK1PqVAgVA0UUXXXTRBUBLgVq\u002fUqAGQMS8nSExbwdAPvjggw8+CEC3MyTm7QwJQDFvZ0jM2wlAq6qqqqqqCkAk5u0MiXkLQJ4hMW9nSAxAF1100UUXDUCRmLczJOYNQArU+pUCtQ5AhA8++OCDD0B\u002fpUCtXykQQDtDYt7OkBBA+OCDDz74EEC1fqVArV8RQHIcx3EcxxFALrrooosuEkDrVwrU+pUSQKj1KwVq\u002fRJAZZNNNtlkE0AiMW9nSMwTQN7OkJi3MxRAm2yyySabFEBYCtT6lQIVQBWo9SsFahVA0UUXXXTRFUCO4ziO4zgWQEuBWr9SoBZACB988MEHF0DEvJ0hMW8XQIFav1Kg1hdAPvjggw8+GED7lQK1fqUYQLczJObtDBlAdNFFF110GUAxb2dIzNsZQO4MiXk7QxpAq6qqqqqqGkBnSMzbGRIbQCTm7QyJeRtA4YMPPvjgG0CeITFvZ0gcQFq\u002fUqDWrxxAF1100UUXHUDU+pUCtX4dQJGYtzMk5h1ATTbZZJNNHkAK1PqVArUeQMdxHMdxHB9AhA8++OCDH0BArV8pUOsfQH+lQK1fKSBAXXTRRRddIEA7Q2LezpAgQBoS83aGxCBA+OCDDz74IEDXrxSo9SshQLV+pUCtXyFAk0022WSTIUByHMdxHMchQFDrVwrU+iFALrrooosuIkANiXk7Q2IiQOtXCtT6lSJAyiabbLLJIkCo9SsFav0iQIbEvJ0hMSNAZZNNNtlkI0BDYt7OkJgjQCIxb2dIzCNAAAAAAAAAJEA="},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAAABWWTD1i9C5P1FTX5rcrsk\u002fgsOxNjYZ0z9VYwJ3JinZPxcA895s994\u002fjoZ7TnE64j\u002fqrfXjmcnkP2ssuWGCIuc\u002fIswnjgo\u002f6T+RI+TArxnrP1BTS0Sbrew\u002f3oUw9q727T8Xi+UGkPHuP\u002fkGhbqvm+8\u002fOPqkFVLz7z8TWwZkkvfvP5TacY1lqO8\u002fkSusMpoG7z8wOzaS1hPuPz2qWDqU0uw\u002fjV22kxlG6z8pMUFVcXLpP4gS3\u002fdfXOc\u002f1MdGRVcJ5T\u002fm1IwiaH\u002fiP8q16nZlit8\u002f8e22b6rD2T9j8JxQsrnTPwFWfWl\u002f+Mo\u002f+7miP25uvD8ew57TVQ2FP7c2U+b2Mbe\u002fNJcb8IdkyL+cMtDaNXjSv4gGHUH0jdi\u002fBM5I1Z1j3r8dASM\u002f\u002fPThv5J0Xo5MieS\u002ffMX9lQTo5r9AD0Xy9Arpv5gfWUKK7Oq\u002fhEBctduH7L9UjGrat9jtv9nTBZKv2+6\u002fGw5iBB+O778QwS6FNO7vv7NU4lL1+u+\u002fvLAjJUC0778fSaaDzRrvv6PqleQtMO6\u002fehV7l8X27L+nYD+HxnHrv2I\u002fnOMnpem\u002fD922x5uV57\u002fCVOv4gkjlv1aewt3ew+K\u002fZCe00UEO4L8DKjT9e13av93iNNGlWdS\u002fwgS4cmdBzL8fFrKmiwu\u002fv2He8+4MDZW\u002fu4zZNsGStD+7ZD9aihnHP7P36Je11tE\u002fW\u002fDDABjy1z9jyIBZ\u002fM7dP8e6gdUKr+E\u002fqWzMAXFI5D\u002f\u002f7Lop6KzmP7yvSOox1ug\u002fAl+5UKq+6j+T7POSVmHsP14AZw7yue0\u002fUWGMa\u002fnE7j\u002f0lfnIs3\u002fvP+x2ENY56O8\u002fb1zFynr97z+a4IMvP7\u002fvP+dX8G0pLu8\u002f1DgMKbRL7j8lnQ9hLhrtP1CyCm21nOs\u002fN08I2izX6T+2POhENM7nPxy7bUkbh+U\u002fz6j\u002fpdMH4z+wXUa44VbgP6UpR\u002faW9to\u002fVbjOZAz51D8WLl\u002fQi4nNP2bQXAjp08A\u002f\u002f1m7LN2Snz\u002fo7+kO\u002ffKxv37G6czszcW\u002fVIdizLk00b98w03tlVXXvzzw4HCMOd2\u002fUk\u002fz9Z5o4b8="},"yaxis":"y","type":"scatter"},{"hovertemplate":"función=cos(x)\u003cbr\u003ex=%{x}\u003cbr\u003ey=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"cos(x)","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"cos(x)","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"AAAAAAAAAAAxb2dIzNu5PzFvZ0jM28k\u002fZZNNNtlk0z8xb2dIzNvZP3+lQK1fKeA\u002fZZNNNtlk4z9LgVq\u002fUqDmPzFvZ0jM2+k\u002fF1100UUX7T9\u002fpUCtXynwP3Icx3Ecx\u002fE\u002fZZNNNtlk8z9YCtT6lQL1P0uBWr9SoPY\u002fPvjggw8++D8xb2dIzNv5PyTm7QyJefs\u002fF1100UUX\u002fT8K1PqVArX+P3+lQK1fKQBA+OCDDz74AEByHMdxHMcBQOtXCtT6lQJAZZNNNtlkA0DezpCYtzMEQFgK1PqVAgVA0UUXXXTRBUBLgVq\u002fUqAGQMS8nSExbwdAPvjggw8+CEC3MyTm7QwJQDFvZ0jM2wlAq6qqqqqqCkAk5u0MiXkLQJ4hMW9nSAxAF1100UUXDUCRmLczJOYNQArU+pUCtQ5AhA8++OCDD0B\u002fpUCtXykQQDtDYt7OkBBA+OCDDz74EEC1fqVArV8RQHIcx3EcxxFALrrooosuEkDrVwrU+pUSQKj1KwVq\u002fRJAZZNNNtlkE0AiMW9nSMwTQN7OkJi3MxRAm2yyySabFEBYCtT6lQIVQBWo9SsFahVA0UUXXXTRFUCO4ziO4zgWQEuBWr9SoBZACB988MEHF0DEvJ0hMW8XQIFav1Kg1hdAPvjggw8+GED7lQK1fqUYQLczJObtDBlAdNFFF110GUAxb2dIzNsZQO4MiXk7QxpAq6qqqqqqGkBnSMzbGRIbQCTm7QyJeRtA4YMPPvjgG0CeITFvZ0gcQFq\u002fUqDWrxxAF1100UUXHUDU+pUCtX4dQJGYtzMk5h1ATTbZZJNNHkAK1PqVArUeQMdxHMdxHB9AhA8++OCDH0BArV8pUOsfQH+lQK1fKSBAXXTRRRddIEA7Q2LezpAgQBoS83aGxCBA+OCDDz74IEDXrxSo9SshQLV+pUCtXyFAk0022WSTIUByHMdxHMchQFDrVwrU+iFALrrooosuIkANiXk7Q2IiQOtXCtT6lSJAyiabbLLJIkCo9SsFav0iQIbEvJ0hMSNAZZNNNtlkI0BDYt7OkJgjQCIxb2dIzCNAAAAAAAAAJEA="},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAA8D9stRluPtbvP\u002fRmmLFmWe8\u002fyNmrmb6K7j90bjl5YWztPzbnWqc6Aew\u002fj8z94P1M6j92c4WfHVToPyaJpn2\u002fG+Y\u002fHRvGyK6p4z\u002fFGOphTQThPwuuYysGZdw\u002fP1edLVd31j+\u002fpAmUBk\u002fQP2iwSFdM+MM\u002f7bevprZ5rD9YkKJzFDinv17aVrxRq8K\u002fyDeLfeVXz79b+k5oVtnVvxmrjs+0zdu\u002frIhO3MG84L\u002fZPI8i+2bjv2WKJcqR3uW\u002fxHL7hxUd6L\u002fmiO4Dqxzqv7oIvSEb2Ou\u002f+5JWneBK7b8KVQvXM3Huvxmpz7AUSO+\u002fxNrVYlLN77\u002feiQ4zkf\u002fvvwtJpABO3u+\u002fbCgymt9p77+JFDjbdaPuv\u002fxDHJMWje2\u002fBTrPPZgp7L+SFtmbmnzqvyQrJD19iui\u002fWpkzF1RY5r+HI49E2uvjv6b++Q9jS+G\u002furT55JL73L+St69evBTXvzfBGnmp8dC\u002fpYFip7xExb+nyBvUSd2wv99gn3XR9aE\u002fDwVx2NVdwT+otT\u002fF5BDOP6zH8VS+OtU\u002fGTxc6aI12z+D75puwnTgP50A1B\u002fBI+M\u002fI3FapMyg5T+KsJ5zZuXnPyn1T1Oj6+k\u002frRO9yTqu6z\u002fbvXbnlCjtPwarN0TWVu4\u002fLo\u002fJD+o17z+6zqEcisPvP7BzOc9E\u002fu8\u002f9UWj4oDl7z82sIr4fnnvPyeNh\u002fBYu+4\u002f+g5\u002fCP+s7T9bjJHNMlHsP3YFyep\u002fq+o\u002fe8ZN6DLA6D92IkfzTZTmPxjSr8t7LeQ\u002fa6g6+gCS4T\u002f04MDpVpHdP3FYjrmBsdc\u002fPNe1B9eT0T9M9n2umZDGP\u002fwzgItDfbM\u002fCt4dLyRmmb9yg\u002fqw4Q\u002fAvyRGstcTycy\u002fubDKPZOb1L\u002fMSuOV1Jzav76WZQtRLOC\u002fVVMgkgLg4r8R1we4cWLlv2gZDOQRree\u002fjfWqIui56b9ryVnBmoPrv1i8GUV\u002fBe2\u002fIOTFl6Y77r\u002fr3VNM5yLvvxPBO9\u002fluO+\u002fYY1+3Rr8778NpTzi1uvvv\u002fo5cmBEiO+\u002fUxkvNGfS7r8I82r8Gcztv4T5X0QJeOy\u002fH2sMiazZ6r8="},"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"x"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"y"}},"legend":{"title":{"text":"función"},"tracegroupgap":0},"title":{"text":"Trigonométricas"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('d91e24b1-037c-4e0b-92f3-4cf33b9d5b65');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="plotly-express-la-interfaz-rápida" class="slide level2">
+<h2>Plotly Express: la interfaz rápida</h2>
+<div id="36543b1f" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.4.0.min.js" integrity="sha256-KEmPoupLpFyGMyGAiOsiNDbKDKAvxXAn/W+oQa0ZAfk=" crossorigin="anonymous"></script>                <div id="ca32d0ea-ba75-4c7a-b0bc-dc76a958738a" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("ca32d0ea-ba75-4c7a-b0bc-dc76a958738a")) {                    Plotly.newPlot(                        "ca32d0ea-ba75-4c7a-b0bc-dc76a958738a",                        [{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003econtinent=Asia\u003cbr\u003ePIB per cápita (USD)=%{x}\u003cbr\u003eEsperanza de vida (años)=%{y}\u003cbr\u003ePoblación=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Bahrain","Bangladesh","Cambodia","China","Hong Kong, China","India","Indonesia","Iran","Iraq","Israel","Japan","Jordan","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Malaysia","Mongolia","Myanmar","Nepal","Oman","Pakistan","Philippines","Saudi Arabia","Singapore","Sri Lanka","Syria","Taiwan","Thailand","Vietnam","West Bank and Gaza","Yemen, Rep."],"legendgroup":"Asia","marker":{"color":"#636efa","size":{"dtype":"i4","bdata":"A5rmAd3PCgDTqPcIkqLXANiBmU48g2oAq00vQngOUw0CxyMEdpyjATcQYgDEAZkHSV1cAF2OYwE2XewCVzsmAH7VOwAmvnoBD9srADzK2AKeAbkBIecwAFndFgqnum0FjiilATF5RQB\u002f8jYBO7gmAZacYQF13OADFAAVBZxQPQCf7FIB"},"sizemode":"area","sizeref":3296707.74,"symbol":"circle"},"mode":"markers","name":"Asia","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"54R1iKR0jkDGpwAYAxndQPLPDOIDvZVAat\u002fcXx3HmkDRXRJnHV+zQHK\u002fQ1GfZeNAs193umsoo0CA7suZTamrQKmHaHTbqsZAbVUS2Q93sUBuowG80ezYQItUGFsE6t5A3XpND3ansUArajANQ+SYQBMZVvEIzdZASBtHrF8Z50B3hNOCh27EQFwgQfHTUchATsEaZ4svqEAAAAAAAICNQEjfpGlwDZFAmGn7VwzL1UCwrDQp5VukQLWpukf27KhAD0WBPrUl1UCiYpy\u002f5QTnQJ6xL9kwBK9ATIqPT4xYsECOHr+3kQvcQIOvr3VlIr1AkdJsHicTo0BqNLkYs6KnQP2FHjGK0aFA"},"xaxis":"x","y":{"dtype":"f8","bdata":"RIts5\u002fvpRUBxPQrXo+hSQIcW2c73A1BABoGVQ4vcTUAv3SQGgT1SQFpkO99PjVRA6iYxCKwsUECamZmZmalRQARWDi2yvVFA9ihcj8LFTUBI4XoUri9UQDvfT42XplRACtejcD0iUkBeukkMAtNQQB1aZDvfp1NAFIPAyqFlU0BkO99Pjf9RQIGVQ4tsj1JACKwcWmSzUEBGtvP91AhPQBSuR+F65E9AKVyPwvXoUkD0\u002fdR46V5QQHnpJjEI7FFAfT81XroxUkCR7Xw\u002fNf5TQNNNYhBYGVJA\u002ftR46SaJUkCamZmZmZlTQIGVQ4tsp1FADi2yne+PUkBeukkMAltSQNNNYhBYWU9A"},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003econtinent=Europe\u003cbr\u003ePIB per cápita (USD)=%{x}\u003cbr\u003eEsperanza de vida (años)=%{y}\u003cbr\u003ePoblación=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Albania","Austria","Belgium","Bosnia and Herzegovina","Bulgaria","Croatia","Czech Republic","Denmark","Finland","France","Germany","Greece","Hungary","Iceland","Ireland","Italy","Montenegro","Netherlands","Norway","Poland","Portugal","Romania","Serbia","Slovak Republic","Slovenia","Spain","Sweden","Switzerland","Turkey","United Kingdom"],"legendgroup":"Europe","marker":{"color":"#EF553B","size":{"dtype":"i4","bdata":"i\u002fA2AGcefQCikp4ABnZFAOq8bwAAkEQACBScANhvUwC87k8ADBGkA+RW6QRyXaMADOuXAGubBAAesz4AlUN3A8ByCgD12PwA1p1GAOG9SwKUZaIA2OdTAXnhmgBOH1MAnageAL8waQKwzYkAZUZzAHfLPQQuX58D"},"sizemode":"area","sizeref":3296707.74,"symbol":"circle"},"mode":"markers","name":"Europe","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"YBQEjwcxt0BYyjLEz6PhQG+70FyTc+BA8nhafkwWvUDPMSB7ZdzEQBTGFoKcjcxAH7qgvlNM1kCxbVFmzTnhQPmgZ7PiNuBAduCcEYHB3UC+TX\u002f2l2rfQHjuPVya5NpAQni0cTyW0UALYwtBmarhQCxlGeJ\u002f3ONAvJaQD27m20BL58Oz8hLCQJbnwd299+FAVmXfFaYZ6ECjC+pb9g7OQFVNEHVpB9RA09nJ4DwcxUBbI4JxRB3DQGB2Tx6UPdJAcsRafBAq2UAwKqkTRCXcQP+ye\u002fJ3iOBAGH0FaU1Q4kCSCI1gI4XAQOPfZ1xoNuBA"},"xaxis":"x","y":{"dtype":"f8","bdata":"UI2XbhIbU0CTGARWDvVTQE5iEFg53FNASgwCK4e2UkC4HoXrUUBSQB1aZDvf71JAyXa+nxofU0Boke18P5VTQHnpJjEI1FNANV66SQwqVEBEi2zn+9lTQPT91Hjp3lNAFIPAyqFVUkCcxCCwcnBUQHE9CtejuFNAbef7qfEiVECYbhKDwKJSQFTjpZvE8FNABoGVQ4sMVEB56SYxCORSQIPAyqFFhlNAWDm0yHYeUkDjpZvEIIBSQN9PjZduqlJAJQaBlUN7U0BOYhBYOTxUQH9qvHSTOFRAwJ8aL91sVEB9PzVeuvFRQDMzMzMz21NA"},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003econtinent=Africa\u003cbr\u003ePIB per cápita (USD)=%{x}\u003cbr\u003eEsperanza de vida (años)=%{y}\u003cbr\u003ePoblación=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Algeria","Angola","Benin","Botswana","Burkina Faso","Burundi","Cameroon","Central African Republic","Chad","Comoros","Congo, Dem. Rep.","Congo, Rep.","Cote d'Ivoire","Djibouti","Egypt","Equatorial Guinea","Eritrea","Ethiopia","Gabon","Gambia","Ghana","Guinea","Guinea-Bissau","Kenya","Lesotho","Liberia","Libya","Madagascar","Malawi","Mali","Mauritania","Mauritius","Morocco","Mozambique","Namibia","Niger","Nigeria","Reunion","Rwanda","Sao Tome and Principe","Senegal","Sierra Leone","Somalia","South Africa","Sudan","Swaziland","Tanzania","Togo","Tunisia","Uganda","Zambia","Zimbabwe"],"legendgroup":"Africa","marker":{"color":"#00cc96","size":{"dtype":"i4","bdata":"4J\u002f8AXyFvQDqQ3sA2wIZALuZ2gBpB4AAJQYOAY6qQgBXO5wAMNkKACfS2QMi\u002fjkA4dwSAfaSBwBfvcgEIWkIAFneSgCPeo8EEzMWACfDGQD6BF0BpsqXACl2FgBBXh8C6bUeAFa8MACyHVwApnkkAedaywAzl7cAseUxAEIWEwD3FwMCKHAwAahbHwCRwsQAfGkMCI4tDACsM4cAmwsDAOUvuwAywl0ANSSLAIRanwLBVoUCCkoRAPj2RQLL\u002f1YAPs2cAN4avQHzOrMAZ9q7AA=="},"sizemode":"area","sizeref":3296707.74,"symbol":"circle"},"mode":"markers","name":"Africa","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"ba0vEl5PuEClaVA0O72yQA5qv7UjhZZA26LMBu2MyEDb2y3JIQSTQKHhg40h4XpAFjWYhmHon0BkkSbeIRCGQOI\u002f3UBBoJpAEj5K2y7RjkA2yMlp1FhxQIwPs5cdYaxAWTFcHQAjmECsJ\u002fOP9kSgQKSK4lUuzbVAaJHtfAu9x0DPCMrI9AqEQJEHx9FxloVAIVnABD7LyUCOc5tw\u002f4WHQNRgGoZvvpRAcXkH0zt1jUCc8BKc2hmCQO3Vx0P\u002f3JZAFRqIZVOFmEB15h4SHuh5QMYzaOi\u002fjMdAMv\u002fomxRTkEBSoKqdzLqHQAqfrYNTSpBA5nXEIZssnEA1KQXdfmbFQI4ev7dZ2K1AvceZJny9iUC7YkZ4D8uyQEgHkEZqXYNA3lSkwuh3n0DdCfZfH\u002fa9QAWrjyy1+IpAZof4h735mEAPnZ5348GaQOgk73dT9IpABbhq6CDxjECGcw0z1BrCQCveyDzKVKRADW5rC3uhsUDhQh7B7U2RQKkf5XHCl4tAZMxdS+y0u0AXfnA+hYGQQEDc1avY3JNA2On2SFlbfUA="},"xaxis":"x","y":{"dtype":"f8","bdata":"JQaBlUMTUkAhsHJokV1FQHe+nxovXUxAd76fGi9dSUD2KFyPwiVKQArXo3A9ykhA16NwPQo3SUADK4cW2V5GQBfZzvdTU0lAfT81XrpJUEBCYOXQIjtHQPCnxks3qUtARIts5\u002fspSEBoke18P2VLQBSDwMqh1VFAJjEIrBzKSUCF61G4HgVNQPCnxks3eUpArkfhehReTEDTTWIQWLlNQIlBYOXQAk5AN4lBYOUATECNbOf7qTFHQK5H4XoUDktAsp3vp8ZLRUAQWDm0yNZGQLByaJHtfFJAZBBYObS4TUAQWDm0yCZIQLKd76fGO0tA0SLb+X4KUEAlBoGVQzNSQNEi2\u002fl+ylFA0SLb+X4KRUCJFtnO93NKQOXQItv5bkxAy6FFtvNtR0A\u002fNV66SRxTQOXQItv5HkdAbxKDwMphUEAOLbKd74dPQGQQWDm0SEVAMQisHFoUSEAIrBxaZKtIQLpJDAIrR01AWDm0yHbOQ0AZBFYOLUJKQPYoXI\u002fCNU1AUI2XbhJ7UkBMN4lBYMVJQP3UeOkmMUVAdZMYBFa+RUA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003econtinent=Americas\u003cbr\u003ePIB per cápita (USD)=%{x}\u003cbr\u003eEsperanza de vida (años)=%{y}\u003cbr\u003ePoblación=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Argentina","Bolivia","Brazil","Canada","Chile","Colombia","Costa Rica","Cuba","Dominican Republic","Ecuador","El Salvador","Guatemala","Haiti","Honduras","Jamaica","Mexico","Nicaragua","Panama","Paraguay","Peru","Puerto Rico","Trinidad and Tobago","United States","Uruguay","Venezuela"],"legendgroup":"Americas","marker":{"color":"#ab63fa","size":{"dtype":"i4","bdata":"Z\u002fVmArAliwAXVVMLPX79AUV8+ADe26IC\u002fBM\u002fAJs1rgDGNI4AIOXRACjkaQAA2b8AHr6BAHMxcgDkayoA26R6BlyZVgC9eDEAi7tlAMWKtQFbKDwAYB8QAOsH8xHImjQANgWOAQ=="},"sizemode":"area","sizeref":3296707.74,"symbol":"circle"},"mode":"markers","name":"Americas","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"ICQLmLD1yECcwd8vRtytQGkAb4HmtMFAB7Ezhee74UCGONbF0bnJQPruVpaUXrtAqU2c3IfWwkCBs5QsDXrBQB5Av+9fibdA5fbLJ0PZukCuvOR\u002fWmC2QLQh\u002f8wMQrRAECIZcozGkkAInKVkqbirQOu12VjhmLxAQQ5KmMlkx0BSRIZVpHqlQHui68KXKMNA4KKTpdZMsECIf9jS5\u002fC8QKJ6a2At4NJAdF5jlyCW0UDr\u002fxzm9PjkQDCeQUO7ucRAW5TZIOdLxkA="},"xaxis":"x","y":{"dtype":"f8","bdata":"FK5H4XrUUkD6fmq8dGNQQClcj8L1GFJAbxKDwMopVEAIrBxaZKNTQDeJQWDlOFJANV66SQyyU0C28\u002f3UeJFTQNejcD0KD1JAVg4tsp2\u002fUkDVeOkmMfhRQH9qvHSTkFFAaJHtfD91TkDqJjEIrIxRQD81XrpJJFJAFK5H4XoMU0Coxks3iTlSQOx8PzVe4lJA46WbxCDwUUBt5\u002fup8dpRQDu0yHa+r1NAI9v5fmp0UUBzaJHtfI9TQH9qvHSTGFNAK4cW2c5vUkA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003econtinent=Oceania\u003cbr\u003ePIB per cápita (USD)=%{x}\u003cbr\u003eEsperanza de vida (años)=%{y}\u003cbr\u003ePoblación=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Australia","New Zealand"],"legendgroup":"Oceania","marker":{"color":"#FFA15A","size":{"dtype":"i4","bdata":"AM03ATvNPgA="},"sizemode":"area","sizeref":3296707.74,"symbol":"circle"},"mode":"markers","name":"Oceania","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"54cRwmvQ4EAEHEKVQJjYQA=="},"xaxis":"x","y":{"dtype":"f8","bdata":"16NwPQpPVECTGARWDg1UQA=="},"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"PIB per cápita (USD)"},"type":"log"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Esperanza de vida (años)"}},"legend":{"title":{"text":"continent"},"tracegroupgap":0,"itemsizing":"constant"},"title":{"text":"Esperanza de vida vs PIB per cápita (2007)"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('ca32d0ea-ba75-4c7a-b0bc-dc76a958738a');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Pasa el cursor sobre los puntos. Haz zoom con scroll. Doble clic para resetear.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="integración-con-quarto" class="slide level2">
+<h2>Integración con Quarto</h2>
+<p><strong>Esta presentación es la prueba:</strong></p>
+<ul>
+<li>Cada celda de código Python se ejecuta al renderizar</li>
+<li>Las figuras Plotly se insertan como widgets interactivos</li>
+<li>Se puede exportar a HTML, PDF, o presentar en vivo</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href=""></a><span class="co"># Renderizar la presentación</span></span>
+<span id="cb2-2"><a href=""></a><span class="ex">quarto</span> preview presentacion.qmd</span>
+<span id="cb2-3"><a href=""></a></span>
+<span id="cb2-4"><a href=""></a><span class="co"># Exportar a HTML</span></span>
+<span id="cb2-5"><a href=""></a><span class="ex">quarto</span> render presentacion.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="section-3" class="slide level2" data-background-color="#2c3e50">
+<h2></h2>
+<h3 id="bloque-3-la-galería-como-herramienta">Bloque 3: La galería como herramienta</h3>
+</section>
+<section id="la-galería-de-plotly" class="slide level2 scrollable">
+<h2>La galería de Plotly</h2>
+<p>La mejor forma de aprender Plotly es <strong>copiar y adaptar</strong> desde la galería oficial:</p>
+<p><strong><a href="https://plotly.com/python/">plotly.com/python/</a></strong></p>
+<h3 id="patrón-de-trabajo">Patrón de trabajo:</h3>
+<ol type="1">
+<li><strong>Buscar</strong> el tipo de gráfico que necesitas</li>
+<li><strong>Copiar</strong> el código de ejemplo</li>
+<li><strong>Entender</strong> la estructura de datos que requiere</li>
+<li><strong>Adaptar</strong> con tus propios datos</li>
+</ol>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>Lo más importante no es memorizar la API, sino <strong>entender qué estructura de datos necesita cada gráfico</strong>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="concepto-clave-datos-en-formato-long" class="slide level2">
+<h2>Concepto clave: datos en formato <em>long</em></h2>
+<p>La mayoría de gráficos en <code>plotly.express</code> esperan datos en formato <strong>long</strong> (tidy):</p>
+<div class="columns">
+<div class="column" style="width:45%;">
+<h3 id="wide-ancho">Wide (ancho)</h3>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>país</th>
+<th>2020</th>
+<th>2021</th>
+<th>2022</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MX</td>
+<td>10</td>
+<td>12</td>
+<td>15</td>
+</tr>
+<tr class="even">
+<td>CO</td>
+<td>8</td>
+<td>9</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:10%;">
+<p>→</p>
+</div><div class="column" style="width:45%;">
+<h3 id="long-largo">Long (largo)</h3>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>país</th>
+<th>año</th>
+<th>valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MX</td>
+<td>2020</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>MX</td>
+<td>2021</td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td>MX</td>
+<td>2022</td>
+<td>15</td>
+</tr>
+<tr class="even">
+<td>CO</td>
+<td>2020</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>CO</td>
+<td>2021</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td>CO</td>
+<td>2022</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="co"># Convertir de wide a long</span></span>
+<span id="cb3-2"><a href=""></a>df_long <span class="op">=</span> df_wide.melt(id_vars<span class="op">=</span>[<span class="st">"país"</span>], var_name<span class="op">=</span><span class="st">"año"</span>, value_name<span class="op">=</span><span class="st">"valor"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="ejemplo-1-barras-agrupadas" class="slide level2">
+<h2>Ejemplo 1: Barras agrupadas</h2>
+<div id="6dde5b90" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.4.0.min.js" integrity="sha256-KEmPoupLpFyGMyGAiOsiNDbKDKAvxXAn/W+oQa0ZAfk=" crossorigin="anonymous"></script>                <div id="74e18e14-499a-4fd9-b9e7-b5fc29b5a32f" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("74e18e14-499a-4fd9-b9e7-b5fc29b5a32f")) {                    Plotly.newPlot(                        "74e18e14-499a-4fd9-b9e7-b5fc29b5a32f",                        [{"alignmentgroup":"True","hovertemplate":"País=Argentina\u003cbr\u003eAño=%{x}\u003cbr\u003ePIB per cápita (USD)=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Argentina","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"Argentina","offsetgroup":"Argentina","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"i2","bdata":"yAfNB9IH1wc="},"xaxis":"x","y":{"dtype":"f8","bdata":"QQ5KmDUuwkCOBvAWpGvFQANd+wLSLsFAICQLmLD1yEA="},"yaxis":"y","type":"bar"},{"alignmentgroup":"True","hovertemplate":"País=Brazil\u003cbr\u003eAño=%{x}\u003cbr\u003ePIB per cápita (USD)=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Brazil","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"Brazil","offsetgroup":"Brazil","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"i2","bdata":"yAfNB9IH1wc="},"xaxis":"x","y":{"dtype":"f8","bdata":"E3MQdEgmu0AgG0gX+xW\u002fQDD84Hw2w79AaQBvgea0wUA="},"yaxis":"y","type":"bar"},{"alignmentgroup":"True","hovertemplate":"País=Chile\u003cbr\u003eAño=%{x}\u003cbr\u003ePIB per cápita (USD)=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Chile","marker":{"color":"#00cc96","pattern":{"shape":""}},"name":"Chile","offsetgroup":"Chile","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"i2","bdata":"yAfNB9IH1wc="},"xaxis":"x","y":{"dtype":"f8","bdata":"eTwtPyCsvUBnLJrOBsPDQHxhMlVkDcVAhjjWxdG5yUA="},"yaxis":"y","type":"bar"},{"alignmentgroup":"True","hovertemplate":"País=Colombia\u003cbr\u003eAño=%{x}\u003cbr\u003ePIB per cápita (USD)=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Colombia","marker":{"color":"#ab63fa","pattern":{"shape":""}},"name":"Colombia","offsetgroup":"Colombia","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"i2","bdata":"yAfNB9IH1wc="},"xaxis":"x","y":{"dtype":"f8","bdata":"oYLDC6ZEtUB3x2KbXOW3QDSg3oxCe7ZA+u5WlpReu0A="},"yaxis":"y","type":"bar"},{"alignmentgroup":"True","hovertemplate":"País=Mexico\u003cbr\u003eAño=%{x}\u003cbr\u003ePIB per cápita (USD)=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Mexico","marker":{"color":"#FFA15A","pattern":{"shape":""}},"name":"Mexico","offsetgroup":"Mexico","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"i2","bdata":"yAfNB9IH1wc="},"xaxis":"x","y":{"dtype":"f8","bdata":"ghyUMDGAwkDKiXYVphPDQHR7SWM4+8RAQQ5KmMlkx0A="},"yaxis":"y","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Año"},"type":"category"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"PIB per cápita (USD)"}},"legend":{"title":{"text":"País"},"tracegroupgap":0},"title":{"text":"PIB per cápita en Latinoamérica (1990-2007)"},"barmode":"group"},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('74e18e14-499a-4fd9-b9e7-b5fc29b5a32f');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</section>
+<section id="ejemplo-2-series-temporales-con-hover" class="slide level2">
+<h2>Ejemplo 2: Series temporales con hover</h2>
+<div id="59927e8f" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.4.0.min.js" integrity="sha256-KEmPoupLpFyGMyGAiOsiNDbKDKAvxXAn/W+oQa0ZAfk=" crossorigin="anonymous"></script>                <div id="13697049-bf2e-4659-83cb-81954dc4b73f" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("13697049-bf2e-4659-83cb-81954dc4b73f")) {                    Plotly.newPlot(                        "13697049-bf2e-4659-83cb-81954dc4b73f",                        [{"customdata":{"dtype":"f8","bdata":"AAAAwH0McUGCO1CnUBe3QAAAAKC6s3JBc6q1MNvIukAAAABwPEx0QWS7e4Aq3btAAAAAEC3fdUFlKy\u002f583S\u002fQAAAAHDBoXdBBoNr7oRxwkAAAABA2bt5Qb9gN2yDr8NAAAAA4Gv7e0GFe2Xe8pLBQAAAAGDzJ35B8iIT8NXZwUAAAAAYYTGAQUEOSpg1LsJAAAAAOF5DgUGOBvAWpGvFQAAAAIgXR4JBA137AtIuwUAAAAA4qzeDQSAkC5iw9chA","shape":"12, 2"},"hovertemplate":"\u003cb\u003e%{customdata[0]:,.0f}\u003c\u002fb\u003e habitantes\u003cbr\u003ePIB: $%{customdata[1]:,.0f}\u003cbr\u003eEsperanza: %{y:.1f} años","legendgroup":"Argentina","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Argentina","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"oAelB6oHrwe0B7kHvgfDB8gHzQfSB9cH"},"xaxis":"x","y":{"dtype":"f8","bdata":"rkfhehQ+T0Coxks3iRlQQAwCK4cWSVBAf2q8dJNoUEBcj8L1KMRQQBFYObTIHlFAPzVeukl8UUCoxks3ibFRQGQ730+N91FAmpmZmZlRUkD2KFyPwpVSQBSuR+F61FJA"},"yaxis":"y","type":"scatter"},{"customdata":{"dtype":"f8","bdata":"AAAAAH79ikGhoX+C43mgQAAAABjaQY9BZAPpYrtuo0AAAAB4EyGSQd1fPe4rEapAAAAAfCL+lEEjLgCNusuqQAAAAOjJCphBL4mzIrZ5s0AAAAB8K0GbQYrJG2AeBLpAAAAA7EW\u002fnkFywRn81Xa7QAAAALgfCqFBYEiHhxh\u002fvkAAAABMApiiQRNzEHRIJrtAAAAAPqMXpEEgG0gX+xW\u002fQAAAAMiLcqVBMPzgfDbDv0AAAAAuqqamQWkAb4HmtMFA","shape":"12, 2"},"hovertemplate":"\u003cb\u003e%{customdata[0]:,.0f}\u003c\u002fb\u003e habitantes\u003cbr\u003ePIB: $%{customdata[1]:,.0f}\u003cbr\u003eEsperanza: %{y:.1f} años","legendgroup":"Brazil","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Brazil","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"oAelB6oHrwe0B7kHvgfDB8gHzQfSB9cH"},"xaxis":"x","y":{"dtype":"f8","bdata":"TDeJQWB1SUAUrkfheqRKQIXrUbge1UtAN4lBYOXQTECNl24Sg8BNQDvfT42Xvk5AYLpJDAKrT0CF61G4Hk1QQM\u002f3U+Olw1BARrbz\u002fdRYUUCq8dJNYsBRQClcj8L1GFJA"},"yaxis":"y","type":"scatter"},{"customdata":{"dtype":"f8","bdata":"AAAAwCRUWEFe8dQj9ceuQAAAAIA641pBeEfGap\u002fbsEAAAACAql5eQQCQEyYYp7FAAAAAgKPlYEFZiA6Bp\u002fKzQAAAAIDiiGJB0NOAQQZ2tUAAAAAgrjdkQYKPwYrDlLJAAAAAAPHoZUG2Oc5tquezQAAAAECfxWdB\u002faAuUhCrtUAAAABAcONpQXk8LT8grL1AAAAAIN\u002fYa0FnLJrOBsPDQAAAAMDqjm1BfGEyVWQNxUAAAACgiA9vQYY41sXRuclA","shape":"12, 2"},"hovertemplate":"\u003cb\u003e%{customdata[0]:,.0f}\u003c\u002fb\u003e habitantes\u003cbr\u003ePIB: $%{customdata[1]:,.0f}\u003cbr\u003eEsperanza: %{y:.1f} años","legendgroup":"Chile","line":{"color":"#00cc96","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Chile","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"oAelB6oHrwe0B7kHvgfDB8gHzQfSB9cH"},"xaxis":"x","y":{"dtype":"f8","bdata":"j8L1KFxfS0C28\u002f3UeAlMQIPAyqFF9kxAbef7qfFCTkCcxCCwcrhPQBbZzvdTw1BAXI\u002fC9SikUUBzaJHtfB9SQPLSTWIQiFJATmIQWDn0UkDXo3A9CndTQAisHFpko1NA"},"yaxis":"y","type":"scatter"},{"customdata":{"dtype":"f8","bdata":"AAAAYKaOZ0HN59ztOsCgQAAAACA9oWtBj+IcdZwnokAAAADQzThwQaoQj8SzeKNAAAAAsDPZckGxGHWtde2kQAAAAKCif3VBCtrk8FGBqUAAAADAkO53Qdf6IqGdz61AAAAAQHp6ekGmYmNeky2xQAAAAFChh31BjgbwFjgns0AAAAAII0+AQaGCwwumRLVAAAAAMOf0gUF3x2KbXOW3QAAAABjjjYNBNKDejEJ7tkAAAADw3haFQfruVpaUXrtA","shape":"12, 2"},"hovertemplate":"\u003cb\u003e%{customdata[0]:,.0f}\u003c\u002fb\u003e habitantes\u003cbr\u003ePIB: $%{customdata[1]:,.0f}\u003cbr\u003eEsperanza: %{y:.1f} años","legendgroup":"Colombia","line":{"color":"#ab63fa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Colombia","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"oAelB6oHrwe0B7kHvgfDB8gHzQfSB9cH"},"xaxis":"x","y":{"dtype":"f8","bdata":"\u002fKnx0k1SSUDJdr6fGo9LQFg5tMh27kxAJQaBlUP7TUA7tMh2vs9OQEJg5dAi609AbxKDwMqpUED+1HjpJvFQQG3n+6nxGlFAeekmMQiUUUDP91PjpetRQDeJQWDlOFJA"},"yaxis":"y","type":"scatter"},{"customdata":{"dtype":"f8","bdata":"AAAA0HO\u002ffEFmS1ZFQCyrQAAAAOBbsoBBpyGq8IsjsEAAAABotpuDQazFpwCc5bFAAAAAONXihkEXnMHfu3q2QAAAADAFsopBnvnVHGiZukAAAABAM2eOQXSaBdrt+r1AAAAAIJ0UkUHpnJ\u002fiksXCQAAAAPBJGpNBigPo9xP4wEAAAADY3gGVQYIclDAxgMJAAAAAqPnclkHKiXYVphPDQAAAANzgbphBdHtJYzj7xEAAAABsk+qZQUEOSpjJZMdA","shape":"12, 2"},"hovertemplate":"\u003cb\u003e%{customdata[0]:,.0f}\u003c\u002fb\u003e habitantes\u003cbr\u003ePIB: $%{customdata[1]:,.0f}\u003cbr\u003eEsperanza: %{y:.1f} años","legendgroup":"Mexico","line":{"color":"#FFA15A","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Mexico","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"oAelB6oHrwe0B7kHvgfDB8gHzQfSB9cH"},"xaxis":"x","y":{"dtype":"f8","bdata":"okW28\u002f1kSUC4HoXrUZhLQIPAyqFFJk1ArkfhehQOTkCR7Xw\u002fNS5PQDVeukkMQlBAUrgehevZUEAdWmQ7319RQIXrUbge3VFAexSuR+FqUkB9PzVeurlSQBSuR+F6DFNA"},"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Año"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Esperanza de vida (años)"}},"legend":{"title":{"text":"País"},"tracegroupgap":0},"title":{"text":"Evolución de la esperanza de vida en Latinoamérica"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('13697049-bf2e-4659-83cb-81954dc4b73f');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</section>
+<section id="ejemplo-3-mapa-coroplético" class="slide level2">
+<h2>Ejemplo 3: Mapa coroplético</h2>
+<div id="1004ed3f" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.4.0.min.js" integrity="sha256-KEmPoupLpFyGMyGAiOsiNDbKDKAvxXAn/W+oQa0ZAfk=" crossorigin="anonymous"></script>                <div id="dec246df-d481-4a52-b8b9-7b427ba220b3" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("dec246df-d481-4a52-b8b9-7b427ba220b3")) {                    Plotly.newPlot(                        "dec246df-d481-4a52-b8b9-7b427ba220b3",                        [{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003eEsperanza de vida=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"RIts5\u002fvpRUBQjZduEhtTQCUGgZVDE1JAIbByaJFdRUAUrkfhetRSQNejcD0KT1RAkxgEVg71U0BxPQrXo+hSQIcW2c73A1BATmIQWDncU0B3vp8aL11MQPp+arx0Y1BASgwCK4e2UkB3vp8aL11JQClcj8L1GFJAuB6F61FAUkD2KFyPwiVKQArXo3A9ykhABoGVQ4vcTUDXo3A9CjdJQG8Sg8DKKVRAAyuHFtleRkAX2c73U1NJQAisHFpko1NAL90kBoE9UkA3iUFg5ThSQH0\u002fNV66SVBAQmDl0CI7R0Dwp8ZLN6lLQDVeukkMslNARIts5\u002fspSEAdWmQ73+9SQLbz\u002fdR4kVNAyXa+nxofU0Boke18P5VTQGiR7Xw\u002fZUtA16NwPQoPUkBWDi2ynb9SQBSDwMqh1VFA1XjpJjH4UUAmMQisHMpJQIXrUbgeBU1A8KfGSzd5SkB56SYxCNRTQDVeukkMKlRArkfhehReTEDTTWIQWLlNQESLbOf72VNAiUFg5dACTkD0\u002fdR46d5TQH9qvHSTkFFAN4lBYOUATECNbOf7qTFHQGiR7Xw\u002fdU5A6iYxCKyMUUBaZDvfT41UQBSDwMqhVVJAnMQgsHJwVEDqJjEIrCxQQJqZmZmZqVFABFYOLbK9UUD2KFyPwsVNQHE9CtejuFNASOF6FK4vVEBt5\u002fup8SJUQD81XrpJJFJAO99PjZemVEAK16NwPSJSQK5H4XoUDktAXrpJDALTUEAdWmQ736dTQBSDwMqhZVNAZDvfT43\u002fUUCyne+nxktFQBBYObTI1kZAsHJoke18UkBkEFg5tLhNQBBYObTIJkhAgZVDi2yPUkCyne+nxjtLQNEi2\u002fl+ClBAJQaBlUMzUkAUrkfhegxTQAisHFpks1BAmG4Sg8CiUkDRItv5fspRQNEi2\u002fl+CkVARrbz\u002fdQIT0CJFtnO93NKQBSuR+F65E9AVOOlm8TwU0CTGARWDg1UQKjGSzeJOVJA5dAi2\u002fluTEDLoUW2821HQAaBlUOLDFRAKVyPwvXoUkD0\u002fdR46V5QQOx8PzVe4lJA46WbxCDwUUBt5\u002fup8dpRQHnpJjEI7FFAeekmMQjkUkCDwMqhRYZTQDu0yHa+r1NAPzVeukkcU0BYObTIdh5SQOXQItv5HkdAbxKDwMphUEB9PzVeujFSQA4tsp3vh09A46WbxCCAUkBkEFg5tEhFQJHtfD81\u002flNA30+Nl26qUkAlBoGVQ3tTQDEIrBxaFEhACKwcWmSrSEBOYhBYOTxUQNNNYhBYGVJAukkMAitHTUBYObTIds5DQH9qvHSTOFRAwJ8aL91sVED+1HjpJolSQJqZmZmZmVNAGQRWDi1CSkCBlUOLbKdRQPYoXI\u002fCNU1AI9v5fmp0UUBQjZduEntSQH0\u002fNV668VFATDeJQWDFSUAzMzMzM9tTQHNoke18j1NAf2q8dJMYU0ArhxbZzm9SQA4tsp3vj1JAXrpJDAJbUkDTTWIQWFlPQP3UeOkmMUVAdZMYBFa+RUA="},"type":"choropleth"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"geo":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"center":{},"showframe":false,"showcoastlines":true},"coloraxis":{"colorbar":{"title":{"text":"Esperanza de vida"}},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]]},"legend":{"tracegroupgap":0},"title":{"text":"Esperanza de vida por país (2007)"},"margin":{"l":0,"r":0,"t":40,"b":0}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('dec246df-d481-4a52-b8b9-7b427ba220b3');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</section>
+<section id="ejercicio-reproduce-un-gráfico-de-la-galería" class="slide level2 scrollable">
+<h2>Ejercicio: reproduce un gráfico de la galería</h2>
+<ol type="1">
+<li>Ve a <a href="https://plotly.com/python/">plotly.com/python/</a></li>
+<li>Elige un tipo de gráfico que te interese</li>
+<li>Copia el ejemplo y ejecútalo</li>
+<li>Identifica: ¿qué estructura de datos necesita?</li>
+<li>Adapta el ejemplo usando datos de <code>gapminder</code></li>
+</ol>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Tipos recomendados para explorar:</p>
+<ul>
+<li><a href="https://plotly.com/python/sunburst-charts/">Sunburst</a></li>
+<li><a href="https://plotly.com/python/treemaps/">Treemap</a></li>
+<li><a href="https://plotly.com/python/animations/">Animated scatter</a></li>
+<li><a href="https://plotly.com/python/box-plots/">Box plot</a></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="section-4" class="slide level2" data-background-color="#2c3e50">
+<h2></h2>
+<h3 id="bloque-4-datos-de-la-agenda-2030">Bloque 4: Datos de la Agenda 2030</h3>
+</section>
+<section id="objetivos-de-desarrollo-sostenible-ods" class="slide level2">
+<h2>Objetivos de Desarrollo Sostenible (ODS)</h2>
+<p>La <strong>Agenda 2030</strong> de Naciones Unidas define 17 Objetivos de Desarrollo Sostenible.</p>
+<p>Vamos a trabajar con el <strong>indicador ODS 3.2.1</strong>:</p>
+<blockquote>
+<p><em>Tasa de mortalidad de menores de 5 años (por cada 1,000 nacidos vivos)</em></p>
+</blockquote>
+<p>Fuentes de datos abiertos:</p>
+<ul>
+<li>API de la ONU: <a href="https://unstats.un.org/sdgapi/">unstats.un.org/sdgapi/</a></li>
+<li>Banco Mundial: <a href="https://data.worldbank.org/">data.worldbank.org</a></li>
+<li>datos.gob.es (España): <a href="https://datos.gob.es/">datos.gob.es</a></li>
+</ul>
+</section>
+<section id="paso-1-cargar-y-explorar-los-datos" class="slide level2">
+<h2>Paso 1: Cargar y explorar los datos</h2>
+<div id="30ade8ba" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-stdout">
+<pre><code>Dimensiones: (84, 5)
+Países: 12
+Período: 1990 - 2020
+
+Columnas: ['pais', 'iso_alpha', 'año', 'mortalidad_menores_5', 'region']</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">pais</th>
+<th data-quarto-table-cell-role="th">iso_alpha</th>
+<th data-quarto-table-cell-role="th">año</th>
+<th data-quarto-table-cell-role="th">mortalidad_menores_5</th>
+<th data-quarto-table-cell-role="th">region</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Argentina</td>
+<td>ARG</td>
+<td>1990</td>
+<td>28.7</td>
+<td>América del Sur</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Argentina</td>
+<td>ARG</td>
+<td>1995</td>
+<td>23.5</td>
+<td>América del Sur</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Argentina</td>
+<td>ARG</td>
+<td>2000</td>
+<td>20.2</td>
+<td>América del Sur</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Argentina</td>
+<td>ARG</td>
+<td>2005</td>
+<td>16.7</td>
+<td>América del Sur</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Argentina</td>
+<td>ARG</td>
+<td>2010</td>
+<td>14.1</td>
+<td>América del Sur</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>Argentina</td>
+<td>ARG</td>
+<td>2015</td>
+<td>11.1</td>
+<td>América del Sur</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>Argentina</td>
+<td>ARG</td>
+<td>2020</td>
+<td>8.7</td>
+<td>América del Sur</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>Bolivia</td>
+<td>BOL</td>
+<td>1990</td>
+<td>122.5</td>
+<td>América del Sur</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>Bolivia</td>
+<td>BOL</td>
+<td>1995</td>
+<td>99.8</td>
+<td>América del Sur</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>Bolivia</td>
+<td>BOL</td>
+<td>2000</td>
+<td>80.4</td>
+<td>América del Sur</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Los datos ya están en formato <strong>long</strong> — exactamente lo que Plotly Express necesita.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="paso-2-líneas-de-tiempo-por-país" class="slide level2">
+<h2>Paso 2: Líneas de tiempo por país</h2>
+<div id="2d85b716" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.4.0.min.js" integrity="sha256-KEmPoupLpFyGMyGAiOsiNDbKDKAvxXAn/W+oQa0ZAfk=" crossorigin="anonymous"></script>                <div id="585a565b-ea89-4fe7-a84c-e915a678f401" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("585a565b-ea89-4fe7-a84c-e915a678f401")) {                    Plotly.newPlot(                        "585a565b-ea89-4fe7-a84c-e915a678f401",                        [{"hovertemplate":"País=Argentina\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Argentina","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Argentina","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"MzMzMzOzPEAAAAAAAIA3QDMzMzMzMzRAMzMzMzOzMEAzMzMzMzMsQDMzMzMzMyZAZmZmZmZmIUA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Bolivia\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Bolivia","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Bolivia","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAACgXkAzMzMzM\u002fNYQJqZmZmZGVRAAAAAAADATUAzMzMzM3NFQAAAAAAAwEBAAAAAAAAAOkA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Brazil\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Brazil","line":{"color":"#00cc96","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Brazil","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAABAT0AzMzMzM7NGQM3MzMzMzEBAAAAAAAAAN0AAAAAAAIAxQAAAAAAAADBAAAAAAAAALEA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Chile\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Chile","line":{"color":"#ab63fa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Chile","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAACAM0AzMzMzMzMrQM3MzMzMzCVAZmZmZmZmIkBmZmZmZmYhQJqZmZmZmR9AMzMzMzMzG0A="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Colombia\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Colombia","line":{"color":"#FFA15A","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Colombia","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"zczMzMyMQUDNzMzMzMw8QAAAAAAAADhAAAAAAAAANUAAAAAAAIAyQAAAAAAAADBAzczMzMzMKkA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Ecuador\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Ecuador","line":{"color":"#19d3f3","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Ecuador","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"MzMzMzNzTECamZmZmRlFQDMzMzMzc0BAmpmZmZkZOkCamZmZmZk1QDMzMzMzszBAZmZmZmZmK0A="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Mexico\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Mexico","line":{"color":"#FF6692","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Mexico","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"mpmZmZkZRkAAAAAAAMBAQAAAAAAAgDlAMzMzMzOzNEAAAAAAAIAxQDMzMzMzMy5AzczMzMzMKkA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Peru\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Peru","line":{"color":"#B6E880","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Peru","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"mpmZmZm5U0AAAAAAAABNQDMzMzMzs0NAMzMzMzMzO0CamZmZmZkzQDMzMzMzMzBAmpmZmZmZKUA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Uruguay\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Uruguay","line":{"color":"#FF97FF","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Uruguay","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAACANkBmZmZmZuYzQJqZmZmZmTBAMzMzMzMzLUAzMzMzMzMmQM3MzMzMzCJAZmZmZmZmHEA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Paraguay\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Paraguay","line":{"color":"#FECB52","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Paraguay","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"ZmZmZmbmREBmZmZmZuZBQAAAAAAAgD9AzczMzMzMOkAzMzMzMzM3QAAAAAAAADVAAAAAAACAMUA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Guatemala\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Guatemala","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Guatemala","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAACgU0CamZmZmRlOQDMzMzMzs0dAAAAAAAAAQ0CamZmZmRlAQAAAAAAAAD1AAAAAAAAAOUA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"País=Honduras\u003cbr\u003eAño=%{x}\u003cbr\u003eMuertes por cada 1,000 nacidos vivos=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Honduras","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Honduras","orientation":"v","showlegend":true,"x":{"dtype":"i2","bdata":"xgfLB9AH1QfaB98H5Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAATUCamZmZmRlHQM3MzMzMDEJAzczMzMzMPEDNzMzMzEw3QJqZmZmZmTNAMzMzMzMzMEA="},"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Año"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Muertes por cada 1,000 nacidos vivos"}},"legend":{"title":{"text":"País"},"tracegroupgap":0,"font":{"size":9}},"title":{"text":"ODS 3.2.1: Mortalidad de menores de 5 años en Latinoamérica"},"shapes":[{"line":{"color":"red","dash":"dash"},"type":"line","x0":0,"x1":1,"xref":"x domain","y0":25,"y1":25,"yref":"y"}],"annotations":[{"showarrow":false,"text":"Meta ODS 2030: 25 por 1,000","x":1,"xanchor":"right","xref":"x domain","y":25,"yanchor":"bottom","yref":"y"}],"hovermode":"x unified"},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('585a565b-ea89-4fe7-a84c-e915a678f401');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</section>
+<section id="paso-3-dumbbell-chart-progreso-1990-vs-2020" class="slide level2">
+<h2>Paso 3: Dumbbell chart — progreso 1990 vs 2020</h2>
+<div id="e9a9c00c" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.4.0.min.js" integrity="sha256-KEmPoupLpFyGMyGAiOsiNDbKDKAvxXAn/W+oQa0ZAfk=" crossorigin="anonymous"></script>                <div id="9fbce57a-6efe-4278-9d87-e148b9c43651" class="plotly-graph-div" style="height:500px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("9fbce57a-6efe-4278-9d87-e148b9c43651")) {                    Plotly.newPlot(                        "9fbce57a-6efe-4278-9d87-e148b9c43651",                        [{"hovertemplate":"%{y}: %{x:.1f} por 1,000\u003cextra\u003e1990\u003c\u002fextra\u003e","marker":{"color":"#e74c3c","size":14},"mode":"markers","name":"1990","x":{"dtype":"f8","bdata":"AAAAAACAM0AAAAAAAIA2QDMzMzMzszxAzczMzMyMQUBmZmZmZuZEQJqZmZmZGUZAAAAAAAAATUAzMzMzM3NMQAAAAAAAQE9AAAAAAACgU0CamZmZmblTQAAAAAAAoF5A"},"y":["Chile","Uruguay","Argentina","Colombia","Paraguay","Mexico","Honduras","Ecuador","Brazil","Guatemala","Peru","Bolivia"],"type":"scatter"},{"hovertemplate":"%{y}: %{x:.1f} por 1,000\u003cextra\u003e2020\u003c\u002fextra\u003e","marker":{"color":"#2ecc71","size":14},"mode":"markers","name":"2020","x":{"dtype":"f8","bdata":"MzMzMzMzG0BmZmZmZmYcQGZmZmZmZiFAzczMzMzMKkAAAAAAAIAxQM3MzMzMzCpAMzMzMzMzMEBmZmZmZmYrQAAAAAAAACxAAAAAAAAAOUCamZmZmZkpQAAAAAAAADpA"},"y":["Chile","Uruguay","Argentina","Colombia","Paraguay","Mexico","Honduras","Ecuador","Brazil","Guatemala","Peru","Bolivia"],"type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"shapes":[{"line":{"color":"lightgray","width":2},"type":"line","x0":19.5,"x1":6.8,"y0":"Chile","y1":"Chile"},{"line":{"color":"lightgray","width":2},"type":"line","x0":22.5,"x1":7.1,"y0":"Uruguay","y1":"Uruguay"},{"line":{"color":"lightgray","width":2},"type":"line","x0":28.7,"x1":8.7,"y0":"Argentina","y1":"Argentina"},{"line":{"color":"lightgray","width":2},"type":"line","x0":35.1,"x1":13.4,"y0":"Colombia","y1":"Colombia"},{"line":{"color":"lightgray","width":2},"type":"line","x0":41.8,"x1":17.5,"y0":"Paraguay","y1":"Paraguay"},{"line":{"color":"lightgray","width":2},"type":"line","x0":44.2,"x1":13.4,"y0":"Mexico","y1":"Mexico"},{"line":{"color":"lightgray","width":2},"type":"line","x0":58.0,"x1":16.2,"y0":"Honduras","y1":"Honduras"},{"line":{"color":"lightgray","width":2},"type":"line","x0":56.9,"x1":13.7,"y0":"Ecuador","y1":"Ecuador"},{"line":{"color":"lightgray","width":2},"type":"line","x0":62.5,"x1":14.0,"y0":"Brazil","y1":"Brazil"},{"line":{"color":"lightgray","width":2},"type":"line","x0":78.5,"x1":25.0,"y0":"Guatemala","y1":"Guatemala"},{"line":{"color":"lightgray","width":2},"type":"line","x0":78.9,"x1":12.8,"y0":"Peru","y1":"Peru"},{"line":{"color":"lightgray","width":2},"type":"line","x0":122.5,"x1":26.0,"y0":"Bolivia","y1":"Bolivia"},{"line":{"color":"red","dash":"dash"},"type":"line","x0":25,"x1":25,"xref":"x","y0":0,"y1":1,"yref":"y domain"}],"annotations":[{"showarrow":false,"text":"Meta ODS","x":25,"xanchor":"left","xref":"x","y":1,"yanchor":"top","yref":"y domain"}],"margin":{"l":120},"title":{"text":"ODS 3.2.1: Reducción de mortalidad infantil (1990 → 2020)"},"xaxis":{"title":{"text":"Muertes por cada 1,000 nacidos vivos"}},"height":500},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('9fbce57a-6efe-4278-9d87-e148b9c43651');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</section>
+<section id="paso-4-mapa-coroplético-de-la-región" class="slide level2">
+<h2>Paso 4: Mapa coroplético de la región</h2>
+<div id="4e0829bb" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.4.0.min.js" integrity="sha256-KEmPoupLpFyGMyGAiOsiNDbKDKAvxXAn/W+oQa0ZAfk=" crossorigin="anonymous"></script>                <div id="ff7f2bc1-0f8f-4304-9113-3afe63cb8114" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("ff7f2bc1-0f8f-4304-9113-3afe63cb8114")) {                    Plotly.newPlot(                        "ff7f2bc1-0f8f-4304-9113-3afe63cb8114",                        [{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003eMuertes \u002f 1,000=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Argentina","Bolivia","Brazil","Chile","Colombia","Ecuador","Mexico","Peru","Uruguay","Paraguay","Guatemala","Honduras"],"locations":["ARG","BOL","BRA","CHL","COL","ECU","MEX","PER","URY","PRY","GTM","HND"],"name":"","z":{"dtype":"f8","bdata":"ZmZmZmZmIUAAAAAAAAA6QAAAAAAAACxAMzMzMzMzG0DNzMzMzMwqQGZmZmZmZitAzczMzMzMKkCamZmZmZkpQGZmZmZmZhxAAAAAAACAMUAAAAAAAAA5QDMzMzMzMzBA"},"type":"choropleth"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"geo":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"center":{},"showframe":false,"scope":"south america","showcoastlines":true},"coloraxis":{"colorbar":{"title":{"text":"Muertes \u002f 1,000"}},"colorscale":[[0.0,"rgb(0,104,55)"],[0.1,"rgb(26,152,80)"],[0.2,"rgb(102,189,99)"],[0.3,"rgb(166,217,106)"],[0.4,"rgb(217,239,139)"],[0.5,"rgb(255,255,191)"],[0.6,"rgb(254,224,139)"],[0.7,"rgb(253,174,97)"],[0.8,"rgb(244,109,67)"],[0.9,"rgb(215,48,39)"],[1.0,"rgb(165,0,38)"]],"cmin":5,"cmax":30},"legend":{"tracegroupgap":0},"title":{"text":"ODS 3.2.1: Mortalidad infantil en Latinoamérica (2020)"},"margin":{"l":0,"r":0,"t":40,"b":0}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('ff7f2bc1-0f8f-4304-9113-3afe63cb8114');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</section>
+<section id="section-5" class="slide level2" data-background-color="#2c3e50">
+<h2></h2>
+<h3 id="cierre">Cierre</h3>
+</section>
+<section id="recursos" class="slide level2">
+<h2>Recursos</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Recurso</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Galería Plotly</td>
+<td><a href="https://plotly.com/python/">plotly.com/python/</a></td>
+</tr>
+<tr class="even">
+<td>Plotly Express API</td>
+<td><a href="https://plotly.com/python-api-reference/">plotly.com/python-api-reference/</a></td>
+</tr>
+<tr class="odd">
+<td>Quarto + Plotly</td>
+<td><a href="https://quarto.org/docs/interactive/">quarto.org/docs/interactive/</a></td>
+</tr>
+<tr class="even">
+<td>API ODS (ONU)</td>
+<td><a href="https://unstats.un.org/sdgapi/">unstats.un.org/sdgapi/</a></td>
+</tr>
+<tr class="odd">
+<td>Banco Mundial</td>
+<td><a href="https://data.worldbank.org/">data.worldbank.org</a></td>
+</tr>
+<tr class="even">
+<td>Datos abiertos ODS (ES)</td>
+<td><a href="https://datos.gob.es/">datos.gob.es</a></td>
+</tr>
+<tr class="odd">
+<td>Código de esta sesión</td>
+<td>Este repositorio</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="recapitulación" class="slide level2 scrollable">
+<h2>Recapitulación</h2>
+<ol type="1">
+<li><strong>matplotlib</strong> → entender la anatomía de una figura</li>
+<li><strong>Plotly Express</strong> → crear figuras interactivas con una línea</li>
+<li><strong>La galería</strong> → copiar, entender la estructura de datos, adaptar</li>
+<li><strong>Datos reales</strong> → aplicar todo con indicadores ODS de la Agenda 2030</li>
+</ol>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>La clave no es memorizar funciones, sino <strong>entender qué estructura de datos necesita cada gráfico</strong> y saber buscar en la galería.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="gracias" class="slide level2">
+<h2>¡Gracias!</h2>
+<p>Explora, copia, adapta, y cuenta tu historia con datos.</p>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': true,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
