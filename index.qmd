@@ -1,6 +1,7 @@
 ---
 title: "Intro a Plotly"
 subtitle: "De matplotlib a Plotly: visualización interactiva"
+author: "Guillermo Barrios"
 format:
   revealjs:
     theme: simple
